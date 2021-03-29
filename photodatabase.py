@@ -32,7 +32,7 @@ def create_table(conn, create_table_sql):
 
 
 def main():
-    database = r"C:\sqlite\db\pythonsqlite.db" #must create C:\sqlite\db\  folders first 
+    database = r"C:\sqlite\db\photodata.db" #must create C:\sqlite\db\  folders first 
 
 
     #we are using a many to many strategy
