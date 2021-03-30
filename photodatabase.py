@@ -1,12 +1,9 @@
 import sqlite3
 from sqlite3 import Error
 
-
+#SQLITE studio is useful for checking the database
 def create_connection(db_file):
-    """ create a database connection to the SQLite database specified by db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
+
     conn = None
     try:
         conn = sqlite3.connect(db_file)
@@ -19,11 +16,6 @@ def create_connection(db_file):
 
 
 def create_table(conn, create_table_sql):
-    """ create a table from the create_table_sql statement
-    :param conn: Connection object
-    :param create_table_sql: a CREATE TABLE statement
-    :return:
-    """
     try:
         c = conn.cursor()
         c.execute(create_table_sql)
@@ -31,7 +23,7 @@ def create_table(conn, create_table_sql):
         print(e)
 
 
-def main():
+def Createdatabase():
     database = r"C:\sqlite\db\photodata.db" #must create C:\sqlite\db\  folders first 
 
 
@@ -67,5 +59,29 @@ def main():
         print("Error! cannot create the database connection.")
 
 
-if __name__ == '__main__':
-    main()
+def createphoto(conn, task):
+    sql = ''' INSERT INTO photos(filelocation) VALUES(?)''' #add quality when implemented
+
+    cur = conn.cursor()
+    cur.execute(sql, task)
+    conn.commit()
+
+    return cur.lastrowid
+
+
+def insertphoto(photolocation): #add tags later
+    database = r"C:\sqlite\db\photodata.db"
+    conn = create_connection(database)
+    photo= ([photolocation])#add quality after location when implemented
+    #tags add here
+    createphoto(conn, photo)
+
+
+#def outputquery(tags):
+
+#def outputall():
+
+if __name__ == '__main__': #testing
+    Createdatabase()
+    test = 'test'
+    insertphoto(test)
