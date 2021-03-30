@@ -7,7 +7,7 @@ window.title("Join")
 window.geometry("1000x1000")
 window.configure(background='grey')
 
-path = "C:/Users/rizwa/OneDrive/Documents/School/CS 4485.001 Computer Science Project/Test Photos/satwik-gawand-fp4qacQaNjY-unsplash.jpg"
+path = r"C:/Users/rizwa/OneDrive/Documents/School/CS 4485.001 Computer Science Project/Test Photos/satwik-gawand-fp4qacQaNjY-unsplash.jpg"
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 img = ImageTk.PhotoImage(Image.open(path))
