@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-
+import os#for testing
 #SQLITE studio is useful for checking the database
 def create_connection(db_file):
 
@@ -24,7 +24,7 @@ def create_table(conn, create_table_sql):
 
 
 def Createdatabase():
-    database = r"C:\sqlite\db\photodata.db" #must create C:\sqlite\db\  folders first 
+    database = r"C:\sqlite\db\photodata.db" #must create C:\sqlite\db\  folders first or change destination
 
 
     #we are using a many to many strategy
@@ -35,7 +35,6 @@ def Createdatabase():
                                     ); """
     
     sql_create_reference_table = """ CREATE TABLE IF NOT EXISTS reference (
-                                        refid integer PRIMARY KEY,
                                         photoid integer NOT NULL,
                                         tagid integer NOT NULL,
                                         FOREIGN KEY (photoid) REFERENCES photos (id),
@@ -68,20 +67,28 @@ def createphoto(conn, task):
 
     return cur.lastrowid
 
+#def createtags(tags):
 
-def insertphoto(photolocation): #add tags later
+def insertphoto(photolocation): #add tags after photolocation
     database = r"C:\sqlite\db\photodata.db"
     conn = create_connection(database)
     photo= ([photolocation])#add quality after location when implemented
     #tags add here
-    createphoto(conn, photo)
+    photoid = createphoto(conn, photo)
+    #tag create here
 
 
 #def outputquery(tags):
 
-#def outputall():
+#def outputalltags():
+
+#def outputalldb():
 
 if __name__ == '__main__': #testing
     Createdatabase()
-    test = 'test'
+    test = r"C:\sqlite\db\photodata.db"
     insertphoto(test)
+    '''for root, dirs, files in os.walk("F:\pictures"):
+        for file in files:
+            if file.endswith(".png"):
+                insertphoto(os.path.join(root, file))'''
