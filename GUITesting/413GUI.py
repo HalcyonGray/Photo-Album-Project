@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from tkinter.filedialog import askopenfilename, asksaveasfilename
-
+from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
+import os
 #initalize window
 
 window = Tk()
@@ -12,7 +12,7 @@ window.geometry("500x500")
 #create a notebook called tabs to store tabs
 tabs = ttk.Notebook(window)
 tabs.pack(pady=0)#possible padding we can add from the top
-
+photolist = []
 #FUNCTION CALLS
 def open_file():
     """Open a file for editing."""
@@ -26,6 +26,19 @@ def open_file():
         text = input_file.read()
         txt_edit.insert(tk.END, text)
     window.title(f"Simple Text Editor - {filepath}")
+
+def open_dir():
+    """open dir for photos"""
+    filepath = askdirectory()
+    if not filepath:
+        return
+    for root, dirs, files in os.walk(filepath): #all .png in folder
+        for file in files:
+            if file.endswith(".png") | file.endswith(".jpeg"):
+                    photolist.append(os.path.join(root, file))
+    while photolist:
+        print(photolist.pop())
+    
 
 def save_file():
     """Save the current file as a new file."""
@@ -59,7 +72,7 @@ btn_dataedit = Button(settings, text="Database Edit", bd=40, font=18).pack(pady=
 btn_dataselect = Button(settings, text="Database Selection", bd=40, font=18).pack(pady=10)
 btn_setbuild = Button(settings, text="Set Album Build Location", bd=40, font=18).pack(pady=10)
 #PHOTO UPLOAD TAB:
-btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_file)
+btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
 btn_save = Button(photoUpload, text="Save As...", bd=10, font=18, pady=10, command=save_file)
 btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
 
