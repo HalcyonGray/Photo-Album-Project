@@ -36,7 +36,7 @@ def open_dir():
         for file in files:
             if file.endswith(".png") | file.endswith(".jpeg"):
                     photolist.append(os.path.join(root, file))
-    while photolist:
+    while photolist: #for testing
         print(photolist.pop())
     
 
