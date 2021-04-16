@@ -127,40 +127,47 @@ def outputquery(tags): #to be changed: add multi tag search
     conn = create_connection(database)
 
     sql = ''' SELECT filelocation FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id WHERE tagname=?'''
-
+    returrnstack = []
     task = tags
     cur = conn.cursor()
     cur.execute(sql, (task,))
     conn.commit()
 
     for row in cur:
-        print(row[0])
+        #print(row[0])
+        returrnstack.append(row[0])
+    return returrnstack
 
 def outputalltags():
     database = r"C:\sqlite\db\photodata.db"
     conn = create_connection(database)
 
     sql = ''' SELECT tagname FROM tags'''
-
+    returrnstack = []
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
 
     for row in cur:
-        print(row[0])
+        #print(row[0])
+        returrnstack.append(row[0])
+    return returrnstack
 
 def outputalldb(): # to be changed: combine tags on single photos
     database = r"C:\sqlite\db\photodata.db"
     conn = create_connection(database)
 
-    sql = ''' SELECT filelocation, tags.tagname FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id'''
-
+    sql = ''' SELECT filelocation, tags.tagname FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id ORDER BY filelocation ASC'''
+    returrnstack = []
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
 
     for row in cur:
-        print(row[0], "     ", row[1])
+        #print(row[0], "     ", row[1])
+        returrnstack.append(row[0])
+        returrnstack.append(row[1])
+    return returrnstack
 
 def deleteimage(photolocation):
     database = r"C:\sqlite\db\photodata.db"
