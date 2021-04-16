@@ -10,7 +10,7 @@ def on_configure(event):
 
 root = tk.Tk()
 root.title('Electronic Photo Album')
-window = tk.Canvas(root, height=1080, width=1920, bg="Purple")
+window = tk.Canvas(root, height=500, width=500, bg="Purple")
 window.pack(side=tk.LEFT)
 
 scrollbar = tk.Scrollbar(root, command=window.yview)
