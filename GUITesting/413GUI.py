@@ -13,6 +13,7 @@ window.geometry("500x500")
 tabs = ttk.Notebook(window)
 tabs.pack(pady=0)#possible padding we can add from the top
 photolist = []
+tag_var = StringVar()
 #FUNCTION CALLS
 def open_file():
     """Open a file for editing."""
@@ -39,9 +40,16 @@ def open_dir():
     while photolist: #for testing
         print(photolist.pop())
     
+def save_Tag():
+    """tag input for photo upload to database, etc."""
+    tag = tag_var.get()
+    #operations here
 
+    tag_var.set("")
+
+""" Not sure what this is for ~ Grayson
 def save_file():
-    """Save the current file as a new file."""
+    #Save the current file as a new file.
     filepath = asksaveasfilename(
         defaultextension="txt",
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
@@ -52,7 +60,7 @@ def save_file():
         text = txt_edit.get(1.0, tk.END)
         output_file.write(text)
     window.title(f"Simple Text Editor - {filepath}")
-
+"""
 txt_edit = tk.Text(window) #idk what this does but i put it in cause it was needed
 
 #Initalize different tabs
@@ -72,15 +80,18 @@ btn_dataedit = Button(settings, text="Database Edit", bd=40, font=18).pack(pady=
 btn_dataselect = Button(settings, text="Database Selection", bd=40, font=18).pack(pady=10)
 btn_setbuild = Button(settings, text="Set Album Build Location", bd=40, font=18).pack(pady=10)
 #PHOTO UPLOAD TAB:
+btn_taglable = Label(photoUpload, text="Enter Tag Below: ",bd=10, font=18, pady=10)
+btn_tagentry = Entry(photoUpload, textvariable = tag_var,bd=10, show=None, font=18)
 btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
-btn_save = Button(photoUpload, text="Save As...", bd=10, font=18, pady=10, command=save_file)
+btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
 btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
 
 #somehow change displayimg button to an image
 #photo = PhotoImage(file=r"path")
 #btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
 
-
+btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
 btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
 btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
