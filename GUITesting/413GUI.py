@@ -14,6 +14,8 @@ tabs = ttk.Notebook(window)
 tabs.pack(pady=0)#possible padding we can add from the top
 photolist = []
 tag_var = StringVar()
+photobuttonlist = []
+photo_var = [] #true/false stack for tag upload
 #FUNCTION CALLS
 def open_file():
     """Open a file for editing."""
@@ -37,14 +39,32 @@ def open_dir():
         for file in files:
             if file.endswith(".png") | file.endswith(".jpeg"):
                     photolist.append(os.path.join(root, file))
-    while photolist: #for testing
-        print(photolist.pop())
+
+
+    '''img = Image.open(filepath)
+    img.thumbnail((400, 400))
+    img = ImageTk.PhotoImage(img)
+    panel = Label(photoUpload, image=img)
+    panel.image = img'''
+
+    for i,j in enumerate(photolist):
+        var = IntVar()
+        c = Checkbutton(photoUpload, text=j, variable = var)
+        c.grid(row=3+i, column=0, columnspan=100)
+        photobuttonlist.append([j.strip(),var,c])
+    '''for i in range(len(photolist)):
+        panel.grid(row=3+i, column=0, columnspan=100)'''
+    if not filepath:
+        return
     
 def save_Tag():
     """tag input for photo upload to database, etc."""
     tag = tag_var.get()
     #operations here
-
+    '''for i in photobuttonlist:
+        if i[1].get()==0:
+            # upload to database with tag
+            i[2].destroy()'''
     tag_var.set("")
 
 """ Not sure what this is for ~ Grayson
