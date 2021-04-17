@@ -3,6 +3,7 @@ from tkinter import ttk
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
 import os
+from PIL import ImageTk, Image
 #initalize window
 
 window = Tk()
@@ -66,6 +67,24 @@ def save_Tag():
             # upload to database with tag
             i[2].destroy()'''
     tag_var.set("")
+    
+
+#only works with local file currently    
+def prev_click():
+    global img
+    window = Toplevel()
+    window.title("Image Preview")
+    window.geometry("1280x720")
+    window.configure(background='white')
+
+    path = r"C:/Users/brendan/dk.png"
+    img = ImageTk.PhotoImage(Image.open(path))
+    panel = Label(window, image = img)
+
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+    
+    
 
 """ Not sure what this is for ~ Grayson
 def save_file():
@@ -93,7 +112,7 @@ tabs.add(photoUpload, text="Photo Upload")
 tabs.add(albumCreate, text="Album Creator")
 
 
-#Initalize buttons for each tab
+
 
 #SETTINGS TAB:
 btn_dataedit = Button(settings, text="Database Edit", bd=40, font=18).pack(pady=10)
@@ -104,11 +123,8 @@ btn_taglable = Label(photoUpload, text="Enter Tag Below: ",bd=10, font=18, pady=
 btn_tagentry = Entry(photoUpload, textvariable = tag_var,bd=10, show=None, font=18)
 btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
 btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
-btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
+btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76, command=prev_click)
 
-#somehow change displayimg button to an image
-#photo = PhotoImage(file=r"path")
-#btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
 
 btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
 btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
@@ -121,10 +137,6 @@ btn_sharpness = Button(albumCreate, text="Sharpness", bd=10, font=18, pady=10)
 btn_contrast = Button(albumCreate, text="Contrast", bd=10, font=18, pady=10)
 btn_face = Button(albumCreate, text="Face Present", bd=10, font=18, pady=10)
 btn_color = Button(albumCreate, text="Color Composition", bd=10, font=18, pady=10)
-
-#somehow change displayimg button to an image
-#photo = PhotoImage(file=r"path")
-#btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
 
 
 btn_filter.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
