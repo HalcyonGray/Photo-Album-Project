@@ -3,6 +3,8 @@ from tkinter import ttk
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
 import os
+from PIL import ImageTk, Image
+
 login = Tk()
 login.title('Login')
 login.geometry("200x200")
@@ -54,11 +56,16 @@ def openAdmin():
 
         for i,j in enumerate(photolist):
             var = IntVar()
-            c = Checkbutton(photoUpload, text=j, variable = var)
-            c.grid(row=3+i, column=0, columnspan=100)
+            c = Checkbutton(photoUpload, text=j, font =18, variable = var)
+            #im = Button(photoUpload, text="Preview Image", bd=10, font=18, command=prev_click) #if we want to use buttons
+            imvar = Image.open(j)
+            imvar.thumbnail((100, 100))
+            img = ImageTk.PhotoImage(imvar)
+            panel = Label(photoUpload, image=img)
+            panel.image = img
+            c.grid(row=3+i, column=0, sticky="ew", padx=5)
+            panel.grid(row=3+i, column=1, columnspan=99)
             photobuttonlist.append([j.strip(),var,c])
-        '''for i in range(len(photolist)):
-            panel.grid(row=3+i, column=0, columnspan=100)'''
         if not filepath:
             return
         
@@ -84,7 +91,20 @@ def openAdmin():
             text = txt_edit.get(1.0, tk.END)
             output_file.write(text)
         admin.title(f"Simple Text Editor - {filepath}")
-        
+    def prev_click():
+        global img
+        window = Toplevel()
+        window.title("Image Preview")
+        window.geometry("1280x720")
+        window.configure(background='white')
+
+        path = variable
+        img = ImageTk.PhotoImage(Image.open(path))
+        panel = Label(window, image = img)
+
+        panel.pack(side = "bottom", fill = "both", expand = "yes")
+        window.mainloop()
+
     txt_edit = tk.Text(admin) #idk what this does but i put it in cause it was needed
 
     #Initalize different tabs
@@ -108,7 +128,7 @@ def openAdmin():
     btn_tagentry = Entry(photoUpload, textvariable = tag_var,bd=10, show=None, font=18)
     btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
     btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
-    btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
+    #btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
 
     #somehow change displayimg button to an image
     #photo = PhotoImage(file=r"path")
@@ -118,7 +138,7 @@ def openAdmin():
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
-    btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
+    #btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
     # ALBUM CREATOR TAB:
     btn_quality = Button(albumCreate, text="Filter By Quality", bd=10, font=18, pady=10, command=open_dir)
     btn_tags = Button(albumCreate, text="Filter By Tags", bd=10, font=18, pady=10, command=save_file)
