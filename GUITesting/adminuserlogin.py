@@ -17,8 +17,8 @@ photodatabase.Createdatabase()
 def openAdmin():
     admin = Toplevel(login)
     admin.title('Photo Album')
+    admin.minsize(width=500, height=500)
     admin.geometry("500x500")
-
     #create a notebook called tabs to store tabs
     tabs = ttk.Notebook(admin)
     tabs.pack(pady=0)#possible padding we can add from the top
@@ -69,10 +69,13 @@ def openAdmin():
             c.grid(row=3+i, column=0)
             panel.grid(row=3+i, column=1)
             photobuttonlist.append([j.strip(),var,c])
+        canvas.create_window(0,0,anchor='nw', window=text_area)
         
     def save_Tag():
         """tag input for photo upload to database, etc."""
         tag = tag_var.get()
+        if(tag==""):
+            return
         #operations here
         '''for i in photobuttonlist:
             if i[1].get()==0:
@@ -133,8 +136,9 @@ def openAdmin():
     btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
     btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
     #btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
-    text_area = scrolledtext.ScrolledText(photoUpload, width = 10, height = 10, state="disable")
-
+    canvas = Canvas(photoUpload)
+    text_area = Frame(photoUpload, width = 10, height = 10)
+    scrollbar = Scrollbar(photoUpload, command=canvas.yview)
     #somehow change displayimg button to an image
     #photo = PhotoImage(file=r"path")
     #btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
@@ -142,7 +146,13 @@ def openAdmin():
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
-    text_area.grid(row=3, pady = 10, padx = 10, sticky='nesw')
+    
+    #text_area.grid(row=3, pady = 1, padx = 1)
+    canvas.update_idletasks()
+    canvas.config(yscrollcommand=scrollbar.set, scrollregion=(0,0,100,1000))    
+    canvas.grid(row=3, pady = 1, padx = 1, sticky='ns')
+    scrollbar.grid(row=3, column=3, sticky='ns')
+
     #btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
     # ALBUM CREATOR TAB:
     btn_quality = Button(albumCreate, text="Filter By Quality", bd=10, font=18, pady=10, command=open_dir)
