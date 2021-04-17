@@ -23,7 +23,8 @@ def create_table(conn, create_table_sql):
 
 
 def Createdatabase():
-    database = r"C:\sqlite\db\photodata.db" #must create C:\sqlite\db\  folders first or change destination
+    database = r"photodata.db" #must create C:\sqlite\db\  folders first or change destination
+    #database = r"C:\sqlite\db\photodata.db"
 
 
     #we are using a many to many realation strategy
@@ -101,7 +102,7 @@ def createtags(conn, task):
 
 
 def insertphoto(photolocation, tags): #add tags after photolocation
-    database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db"    
     conn = create_connection(database)
 
     formatphoto= ([photolocation])#add quality after location when implemented
@@ -123,7 +124,7 @@ def insertphoto(photolocation, tags): #add tags after photolocation
 
 
 def outputquery(tags): #to be changed: add multi tag search
-    database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db"
     conn = create_connection(database)
 
     sql = ''' SELECT filelocation FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id WHERE tagname=?'''
@@ -139,7 +140,7 @@ def outputquery(tags): #to be changed: add multi tag search
     return returrnstack
 
 def outputalltags():
-    database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db"
     conn = create_connection(database)
 
     sql = ''' SELECT tagname FROM tags'''
@@ -154,7 +155,7 @@ def outputalltags():
     return returrnstack
 
 def outputalldb(): # to be changed: combine tags on single photos
-    database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db"
     conn = create_connection(database)
 
     sql = ''' SELECT filelocation, tags.tagname FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id ORDER BY filelocation ASC'''
@@ -170,7 +171,7 @@ def outputalldb(): # to be changed: combine tags on single photos
     return returrnstack
 
 def deleteimage(photolocation):
-    database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db"
     conn = create_connection(database)
     
     sql1 = ''' SELECT id FROM photos where filelocation = ?'''
@@ -185,7 +186,7 @@ def deleteimage(photolocation):
     conn.commit()
 
 def deletetag(tag):
-    database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db"
     conn = create_connection(database)
     
     sql1 = ''' SELECT id FROM tags where tagname = ?'''
@@ -203,7 +204,7 @@ def deletetag(tag):
 #testing
 if __name__ == '__main__': #testing
     Createdatabase()
-    test = r"C:\sqlite\db\photodata.db"
+    test = r"photodata.db"
     test2 = "database_test"
     insertphoto(test, test2)
     input()
