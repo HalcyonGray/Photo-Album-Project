@@ -5,6 +5,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
 import os
 from PIL import ImageTk, Image
 import photodatabase
+from tkinter import scrolledtext
 
 login = Tk()
 login.title('Login')
@@ -58,18 +59,16 @@ def openAdmin():
 
         for i,j in enumerate(photolist):
             var = IntVar()
-            c = Checkbutton(photoUpload, text=j, font =18, variable = var)
+            c = Checkbutton(text_area, text=j, font =18, variable = var)
             #im = Button(photoUpload, text="Preview Image", bd=10, font=18, command=prev_click) #if we want to use buttons
             imvar = Image.open(j)
             imvar.thumbnail((100, 100))
             img = ImageTk.PhotoImage(imvar)
-            panel = Label(photoUpload, image=img)
+            panel = Label(text_area, image=img)
             panel.image = img
-            c.grid(row=3+i, column=0, sticky="ew", padx=5)
-            panel.grid(row=3+i, column=1, columnspan=99)
+            c.grid(row=3+i, column=0)
+            panel.grid(row=3+i, column=1)
             photobuttonlist.append([j.strip(),var,c])
-        if not filepath:
-            return
         
     def save_Tag():
         """tag input for photo upload to database, etc."""
@@ -96,7 +95,7 @@ def openAdmin():
             text = txt_edit.get(1.0, tk.END)
             output_file.write(text)
         admin.title(f"Simple Text Editor - {filepath}")
-    def prev_click():
+    '''def prev_click():
         global img
         window = Toplevel()
         window.title("Image Preview")
@@ -108,7 +107,7 @@ def openAdmin():
         panel = Label(window, image = img)
 
         panel.pack(side = "bottom", fill = "both", expand = "yes")
-        window.mainloop()
+        window.mainloop()'''
 
     txt_edit = tk.Text(admin) #idk what this does but i put it in cause it was needed
 
@@ -134,15 +133,16 @@ def openAdmin():
     btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
     btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
     #btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
+    text_area = scrolledtext.ScrolledText(photoUpload, width = 10, height = 10, state="disable")
 
     #somehow change displayimg button to an image
     #photo = PhotoImage(file=r"path")
     #btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
-
     btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+    text_area.grid(row=3, pady = 10, padx = 10, sticky='nesw')
     #btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
     # ALBUM CREATOR TAB:
     btn_quality = Button(albumCreate, text="Filter By Quality", bd=10, font=18, pady=10, command=open_dir)
