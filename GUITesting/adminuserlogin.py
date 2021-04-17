@@ -17,7 +17,7 @@ photodatabase.Createdatabase()
 def openAdmin():
     admin = Toplevel(login)
     admin.title('Photo Album')
-    admin.minsize(width=500, height=500)
+    admin.minsize(width=1000, height=500)
     admin.geometry("500x500")
     #create a notebook called tabs to store tabs
     tabs = ttk.Notebook(admin)
