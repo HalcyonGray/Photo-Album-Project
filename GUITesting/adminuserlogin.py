@@ -4,11 +4,13 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
 import os
 from PIL import ImageTk, Image
+import photodatabase
 
 login = Tk()
 login.title('Login')
 login.geometry("200x200")
 
+photodatabase.Createdatabase()
 #ADMIN WINDOW
 #---------------------------------------------
 def openAdmin():
@@ -77,6 +79,9 @@ def openAdmin():
             if i[1].get()==0:
                 # upload to database with tag
                 i[2].destroy()'''
+        for i in photobuttonlist:
+            if i[1].get()!=0:
+                photodatabase.insertphoto(i[0], tag)
         tag_var.set("")
 
     def save_file():
