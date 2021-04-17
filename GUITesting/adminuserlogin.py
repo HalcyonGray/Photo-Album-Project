@@ -127,8 +127,8 @@ def openAdmin():
     #Initalize buttons for each tab
 
     #SETTINGS TAB:
-    btn_dataedit = Button(settings, text="Database Edit", bd=40, font=18).pack(pady=10)
-    btn_dataselect = Button(settings, text="Database Selection", bd=40, font=18).pack(pady=10)
+    btn_dataedit = Button(settings, text="Edit Database", bd=40, font=18).pack(pady=10)
+    btn_dataselect = Button(settings, text="Set Database Location", bd=40, font=18).pack(pady=10)
     btn_setbuild = Button(settings, text="Set Album Build Location", bd=40, font=18).pack(pady=10)
     #PHOTO UPLOAD TAB:
     btn_taglable = Label(photoUpload, text="Enter Tag Below: ",bd=10, font=18, pady=10)
@@ -155,17 +155,22 @@ def openAdmin():
 
     #btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
     # ALBUM CREATOR TAB:
-    btn_quality = Button(albumCreate, text="Filter By Quality", bd=10, font=18, pady=10, command=open_dir)
-    btn_tags = Button(albumCreate, text="Filter By Tags", bd=10, font=18, pady=10, command=save_file)
-    btn_preview = Button(albumCreate, text="Preview Image", bd=10, font=18, pady=130, padx=76)
+    btn_quality = Button(albumCreate, text="Build Album By Quality and Tag", bd=10, font=18, pady=10, command=open_dir)
+    btn_taglable2 = Label(albumCreate, text="Enter Tag Below: ",bd=10, font=18, pady=10)
+    btn_tagentry2 = Entry(albumCreate, textvariable = tag_var,bd=10, show=None, font=18)
+    #btn_tags = Button(albumCreate, text="Filter By Tags", bd=10, font=18, pady=10, command=save_file)
+    #btn_preview = Button(albumCreate, text="Preview Image", bd=10, font=18, pady=130, padx=76)
 
     # somehow change displayimg button to an image
     # photo = PhotoImage(file=r"path")
     # btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
 
     btn_quality.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    btn_tags.grid(row=1, column=0, sticky="ew", padx=5)
-    btn_preview.grid(row=2, column=1, sticky="ew", padx=5)
+    btn_taglable2.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+    btn_tagentry2.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
+
+    #btn_tags.grid(row=1, column=0, sticky="ew", padx=5)
+    #btn_preview.grid(row=2, column=1, sticky="ew", padx=5)
 
 
 
