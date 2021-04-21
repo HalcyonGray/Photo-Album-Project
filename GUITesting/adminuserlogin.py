@@ -70,6 +70,11 @@ def openAdmin():
             panel.grid(row=3+i, column=1)
             photobuttonlist.append([j.strip(),var,c])
         canvas.create_window(0,0,anchor='nw', window=text_area)
+        scrollbar = Scrollbar(photoUpload, command=canvas.yview)
+        canvas.config(yscrollcommand=scrollbar.set)
+        scrollbar.grid(row=3, column=3, sticky='ns')
+        text_area.bind("<Configure>", update_scrollregion)
+        canvas.update_idletasks()
         
     def save_Tag():
         """tag input for photo upload to database, etc."""
@@ -148,10 +153,6 @@ def openAdmin():
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
     
     #text_area.grid(row=3, pady = 1, padx = 1)
-    canvas.update_idletasks()
-    canvas.config(yscrollcommand=scrollbar.set, scrollregion=(0,0,100,1000))    
-    canvas.grid(row=3, pady = 1, padx = 1, sticky='ns')
-    scrollbar.grid(row=3, column=3, sticky='ns')
 
     #btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
     # ALBUM CREATOR TAB:
