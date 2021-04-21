@@ -146,7 +146,7 @@ def openAdmin():
     #btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
     canvas = Canvas(photoUpload)
     text_area = Frame(photoUpload, width = 10, height = 10)
-    scrollbar = Scrollbar(photoUpload, command=canvas.yview)
+    canvas.grid(row=3, pady=1, padx=1, sticky='ns')
     #somehow change displayimg button to an image
     #photo = PhotoImage(file=r"path")
     #btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
