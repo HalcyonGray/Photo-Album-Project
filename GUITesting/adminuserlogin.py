@@ -76,6 +76,9 @@ def openAdmin():
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
         
+    def update_scrollregion(event):
+        canvas.configure(scrollregion=canvas.bbox("all"))
+        
     def save_Tag():
         """tag input for photo upload to database, etc."""
         tag = tag_var.get()
