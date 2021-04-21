@@ -62,7 +62,7 @@ def openAdmin():
 
         for i, j in enumerate(photolist):
             var = IntVar()
-            c = Checkbutton(text_area, text=j, font=18, variable=var)
+            c = Checkbutton(text_area, font=18, variable=var)
             # im = Button(photoUpload, text="Preview Image", bd=10, font=18, command=prev_click) #if we want to use buttons
             imvar = Image.open(j)
             imvar.thumbnail((100, 100))
@@ -129,16 +129,17 @@ def openAdmin():
     photoUpload = Frame(tabs, width=500, height=500, bg="purple")
     albumCreate = Frame(tabs, width=500, height=500, bg="green")
 
-    tabs.add(settings, text="Settings")
     tabs.add(photoUpload, text="Photo Upload")
-    tabs.add(albumCreate, text="Album Creator")
+    tabs.add(settings, text="Edit Database")
+    #tabs.add(albumCreate, text="Album Creator")
 
     # Initalize buttons for each tab
 
-    # SETTINGS TAB:
-    btn_dataedit = Button(settings, text="Edit Database", bd=40, font=18).pack(pady=10)
+    # EDIT DATABASE TAB:
     btn_dataselect = Button(settings, text="Set Database Location", bd=40, font=18).pack(pady=10)
     btn_setbuild = Button(settings, text="Set Album Build Location", bd=40, font=18).pack(pady=10)
+
+
     # PHOTO UPLOAD TAB:
     btn_taglable = Label(photoUpload, text="Enter Tag Below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(photoUpload, textvariable=tag_var, bd=10, show=None, font=18)
@@ -185,10 +186,67 @@ def openAdmin():
 # USER WINDOW
 # ---------------------------------------------------------------------
 def openUser():
+
     user = Toplevel(login)
     user.title("User")
-    user.geometry("500x500")
-    Label(user, text="This is what a user will see epic").pack()
+    user.geometry("1000x500")
+    photolist = []
+    tag_var = StringVar()
+    photobuttonlist = []
+
+#FUNCTION CALLS
+    def open_dir():
+        """open dir for photos"""
+        filepath = askdirectory()
+        if not filepath:
+            return
+        for root, dirs, files in os.walk(filepath):  # all .png in folder
+            for file in files:
+                if file.endswith(".png") | file.endswith(".jpg"):
+                    photolist.append(os.path.join(root, file))
+
+        '''img = Image.open(filepath)
+        img.thumbnail((400, 400))
+        img = ImageTk.PhotoImage(img)
+        panel = Label(photoUpload, image=img)
+        panel.image = img'''
+
+        for i, j in enumerate(photolist):
+            var = IntVar()
+            c = Checkbutton(text_area, font=18, variable=var)
+            # im = Button(photoUpload, text="Preview Image", bd=10, font=18, command=prev_click) #if we want to use buttons
+            imvar = Image.open(j)
+            imvar.thumbnail((100, 100))
+            img = ImageTk.PhotoImage(imvar)
+            panel = Label(text_area, image=img)
+            panel.image = img
+            c.grid(row=3 + i, column=0)
+            panel.grid(row=3 + i, column=1)
+            photobuttonlist.append([j.strip(), var, c])
+        canvas.create_window(0, 0, anchor='nw', window=text_area)
+        scrollbar = Scrollbar(user, command=canvas.yview)
+        canvas.config(yscrollcommand=scrollbar.set)
+        scrollbar.grid(row=3, column=3, sticky='ns')
+        text_area.bind("<Configure>", update_scrollregion)
+        canvas.update_idletasks()
+
+    def update_scrollregion(event):
+        canvas.configure(scrollregion=canvas.bbox("all"))
+
+    #USER BUTTONS
+    btn_taglable = Label(user, text="Search for a tag: ", bd=10, font=18, pady=10)
+    btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
+    btn_open = Button(user, text="Upload folder of photos", bd=10, font=18, pady=10, command=open_dir)
+    btn_quality = Button(user, text="Filter by quality", bd=10, font=18, pady=10)
+    # btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
+    canvas = Canvas(user)
+    text_area = Frame(user, width=10, height=10)
+    canvas.grid(row=3, pady=1, padx=1, sticky='ns')
+
+    btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+    btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
+    btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+    btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
 
 
 # LOGIN WINDOW
