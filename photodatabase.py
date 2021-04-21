@@ -1,5 +1,7 @@
 import sqlite3
 from sqlite3 import Error
+import imquality.brisque as brisque
+from PIL import Image
 import os#for testing
 #SQLITE studio is useful for checking the database
 def create_connection(db_file):
@@ -61,10 +63,15 @@ def Createdatabase():
 
 def createphoto(conn, task):
     try:
-        sql = ''' INSERT INTO photos(filelocation) VALUES(?)''' #add quality when implemented
+        sql = ''' INSERT INTO photos(filelocation, quality) VALUES(?,?)''' #add quality when implemented
 
+        print(task)
+        img = Image.open(task)
+        quality = brisque.score(img)
+        print(quality)
+        phototask = (task, abs(quality))
         cur = conn.cursor()
-        cur.execute(sql, task)
+        cur.execute(sql, phototask)
         conn.commit()
 
         return cur.lastrowid
@@ -73,7 +80,7 @@ def createphoto(conn, task):
 
 
         cur = conn.cursor()
-        cur.execute(sql, task)
+        cur.execute(sql, (task,))
         conn.commit()
 
         return cur.fetchone()[0]
@@ -88,6 +95,7 @@ def createtags(conn, task):
         conn.commit()
 
         return cur.lastrowid
+    
     except:
         sql = ''' SELECT id FROM tags WHERE tagname=?''' #add quality when implemented
 
@@ -105,7 +113,7 @@ def insertphoto(photolocation, tags): #add tags after photolocation
     database = r"photodata.db"    
     conn = create_connection(database)
 
-    formatphoto= ([photolocation])#add quality after location when implemented
+    formatphoto= (photolocation)#add quality after location when implemented
     formattag= ([tags])
 
     photoid = createphoto(conn, formatphoto)
@@ -165,7 +173,23 @@ def outputalldb(): # to be changed: combine tags on single photos
     conn.commit()
 
     for row in cur:
-        #print(row[0], "     ", row[1])
+        print(row[0], "     ", row[1])
+        returrnstack.append(row[0])
+        returrnstack.append(row[1])
+    return returrnstack
+
+def buildAlbum(tags): # to be changed: combine tags on single photos
+    database = r"photodata.db"
+    conn = create_connection(database)
+
+    sql = ''' SELECT filelocation, quality FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id WHERE tagname=? ORDER BY quality ASC'''
+    returrnstack = []
+    cur = conn.cursor()
+    cur.execute(sql, (tags,))
+    conn.commit()
+
+    for row in cur:
+        print(row[0], "     ", row[1])
         returrnstack.append(row[0])
         returrnstack.append(row[1])
     return returrnstack
@@ -204,22 +228,16 @@ def deletetag(tag):
 #testing
 if __name__ == '__main__': #testing
     Createdatabase()
-    test = r"photodata.db"
     test2 = "database_test"
+    '''test = r'F:/halcyon/4812.jpg'
     insertphoto(test, test2)
-    input()
-    test3 = "F:\.png"
-    insertphoto(test, test3)
-    input()
-    for root, dirs, files in os.walk("F:\pictures"): #all .png in folder
+    input()'''
+    '''for root, dirs, files in os.walk("F:\halcyon"): #all .png in folder
         for file in files:
-            if file.endswith(".png"):
-                insertphoto(os.path.join(root, file), test3)
-    print()
+            if file.endswith(".jpg"):
+                insertphoto(os.path.join(root, file), test2)'''
+    '''print()
     input()
-    outputquery(test3)
-    input()
-    print()
     outputquery(test2)
     input()
     print()
@@ -228,17 +246,12 @@ if __name__ == '__main__': #testing
     print()
     outputalldb()
     input()
-
-    deleteimage(test)
     for root, dirs, files in os.walk("F:\pictures"): #all .png in folder
         for file in files:
             if file.endswith(".png"):
                 insertphoto(os.path.join(root, file), test2)
-    input()
-    outputalldb()
-    input()
-    deletetag(test3)
-    input()
-    outputalldb()
+    input()'''
+    buildAlbum(test2)
+    #outputalldb()
 
     
