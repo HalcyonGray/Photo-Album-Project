@@ -47,7 +47,7 @@ def openAdmin():
             return
         for root, dirs, files in os.walk(filepath): #all .png in folder
             for file in files:
-                if file.endswith(".png") | file.endswith(".jpeg"):
+                if file.endswith(".png") | file.endswith(".jpg"):
                         photolist.append(os.path.join(root, file))
 
 
