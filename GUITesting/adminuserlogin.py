@@ -127,11 +127,9 @@ def openAdmin():
     # Initalize different tabs
     settings = Frame(tabs, width=500, height=500, bg="pink")  # bg=background color
     photoUpload = Frame(tabs, width=500, height=500, bg="purple")
-    albumCreate = Frame(tabs, width=500, height=500, bg="green")
 
     tabs.add(photoUpload, text="Photo Upload")
     tabs.add(settings, text="Edit Database")
-    #tabs.add(albumCreate, text="Album Creator")
 
     # Initalize buttons for each tab
 
@@ -145,43 +143,13 @@ def openAdmin():
     btn_tagentry = Entry(photoUpload, textvariable=tag_var, bd=10, show=None, font=18)
     btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
     btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
-    # btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
     canvas = Canvas(photoUpload)
     text_area = Frame(photoUpload, width=10, height=10)
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
-    # somehow change displayimg button to an image
-    # photo = PhotoImage(file=r"path")
-    # btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
     btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
-
-    # text_area.grid(row=3, pady = 1, padx = 1)
-
-
-    # btn_displayimg.grid(row=2, column=1, sticky="ew", padx=5)
-    # ALBUM CREATOR TAB:
-    btn_quality = Button(albumCreate, text="Build Album By Quality and Tag", bd=10, font=18, pady=10, command=open_dir)
-    btn_taglable2 = Label(albumCreate, text="Enter Tag Below: ", bd=10, font=18, pady=10)
-    btn_tagentry2 = Entry(albumCreate, textvariable=tag_var, bd=10, show=None, font=18)
-    # btn_tags = Button(albumCreate, text="Filter By Tags", bd=10, font=18, pady=10, command=save_file)
-    # btn_preview = Button(albumCreate, text="Preview Image", bd=10, font=18, pady=130, padx=76)
-
-    # somehow change displayimg button to an image
-    # photo = PhotoImage(file=r"path")
-    # btn_displayimg = Button(photoUpload, image=photo, bd=40, font=18).pack(pady=10)
-
-    btn_quality.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    btn_taglable2.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
-    btn_tagentry2.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
-
-    # btn_tags.grid(row=1, column=0, sticky="ew", padx=5)
-    # btn_preview.grid(row=2, column=1, sticky="ew", padx=5)
-
-    # How to write text thats not a button
-    # Label(admin,text="Test").pack()
-
 
 # USER WINDOW
 # ---------------------------------------------------------------------
@@ -190,6 +158,7 @@ def openUser():
     user = Toplevel(login)
     user.title("User")
     user.geometry("1000x500")
+    user.configure(bg='blue')
     photolist = []
     tag_var = StringVar()
     photobuttonlist = []
@@ -238,7 +207,6 @@ def openUser():
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
     btn_open = Button(user, text="Upload folder of photos", bd=10, font=18, pady=10, command=open_dir)
     btn_quality = Button(user, text="Filter by quality", bd=10, font=18, pady=10)
-    # btn_displayimg = Button(photoUpload, text="Preview Image", bd=10, font=18, pady=130, padx=76)
     canvas = Canvas(user)
     text_area = Frame(user, width=10, height=10)
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
