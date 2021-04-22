@@ -151,7 +151,7 @@ def outputalltags():
     database = r"photodata.db"
     conn = create_connection(database)
 
-    sql = ''' SELECT tagname FROM tags'''
+    sql = ''' SELECT tagname FROM tags ORDER BY tagname ASC'''
     returrnstack = []
     cur = conn.cursor()
     cur.execute(sql)
