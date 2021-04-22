@@ -157,16 +157,33 @@ def openUser():
 
     user = Toplevel(login)
     user.title("User")
-    user.geometry("1000x500")
+    user.geometry("1200x500")
     user.configure(bg='blue')
     photolist = []
+    taglist = []
     tag_var = StringVar()
     num_var = IntVar()
     photobuttonlist = []
+    tagbuttonlist = []
 
 #FUNCTION CALLS
     def output_tags():
-        return
+        taglist = photodatabase.outputalltags()
+        for i, j in enumerate(taglist):
+            print(i)
+            print(j)
+            var = IntVar()
+            c = Checkbutton(text_area, font=18, variable=var)
+            panel = Label(text_area, text = j)
+            c.grid(row=3 + i, column=1)
+            panel.grid(row=3 + i, column=2)
+            photobuttonlist.append([j.strip(), var, c])
+        canvastagout.create_window(0, 0, anchor='nw', window=text_area)
+        scrollbartag = Scrollbar(user, command=canvas.yview)
+        canvastagout.config(yscrollcommand=scrollbar.set)
+        scrollbartag.grid(row=3, column=3, sticky='ns')
+        text_area.bind("<Configure>", update_scrollregion)
+        canvastagout.update_idletasks()
     def build():
         """Build photo Album"""
         tag = tag_var.get()
@@ -187,8 +204,6 @@ def openUser():
 
         for i, j in enumerate(photolist):
             if i < num_var.get() or num_var.get()==0:
-                print(str(i) + ' i')
-                print(str(j) + ' j')
                 var = IntVar()
                 c = Checkbutton(text_area, font=18, variable=var)
                 imvar = Image.open(j)
@@ -217,8 +232,10 @@ def openUser():
     btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
     btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
     canvas = Canvas(user)
+    canvastagout = Canvas(user)
     text_area = Frame(user, width=10, height=10)
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
+    canvastagout.grid(row=3, column = 1 , pady=1, padx=1, sticky='ns')
 
     btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
