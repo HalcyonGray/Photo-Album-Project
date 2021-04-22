@@ -161,18 +161,23 @@ def openUser():
     user.configure(bg='blue')
     photolist = []
     tag_var = StringVar()
+    num_var = IntVar()
     photobuttonlist = []
 
 #FUNCTION CALLS
-    def open_dir():
-        """open dir for photos"""
-        filepath = askdirectory()
+    def output_tags():
+        return
+    def build():
+        """Build photo Album"""
+        tag = tag_var.get()
+        photolist = photodatabase.buildAlbum(tag)
+        '''filepath = askdirectory()
         if not filepath:
             return
         for root, dirs, files in os.walk(filepath):  # all .png in folder
             for file in files:
                 if file.endswith(".png") | file.endswith(".jpg"):
-                    photolist.append(os.path.join(root, file))
+                    photolist.append(os.path.join(root, file))'''
 
         '''img = Image.open(filepath)
         img.thumbnail((400, 400))
@@ -181,17 +186,19 @@ def openUser():
         panel.image = img'''
 
         for i, j in enumerate(photolist):
-            var = IntVar()
-            c = Checkbutton(text_area, font=18, variable=var)
-            # im = Button(photoUpload, text="Preview Image", bd=10, font=18, command=prev_click) #if we want to use buttons
-            imvar = Image.open(j)
-            imvar.thumbnail((100, 100))
-            img = ImageTk.PhotoImage(imvar)
-            panel = Label(text_area, image=img)
-            panel.image = img
-            c.grid(row=3 + i, column=0)
-            panel.grid(row=3 + i, column=1)
-            photobuttonlist.append([j.strip(), var, c])
+            if i < num_var.get() or num_var.get()==0:
+                print(str(i) + ' i')
+                print(str(j) + ' j')
+                var = IntVar()
+                c = Checkbutton(text_area, font=18, variable=var)
+                imvar = Image.open(j)
+                imvar.thumbnail((500, 500))
+                img = ImageTk.PhotoImage(imvar)
+                panel = Label(text_area, image=img)
+                panel.image = img
+                c.grid(row=3 + i, column=0)
+                panel.grid(row=3 + i, column=1)
+                photobuttonlist.append([j.strip(), var, c])
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(user, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
@@ -203,16 +210,20 @@ def openUser():
         canvas.configure(scrollregion=canvas.bbox("all"))
 
     #USER BUTTONS
-    btn_taglable = Label(user, text="Search for a tag: ", bd=10, font=18, pady=10)
+    btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
-    btn_open = Button(user, text="Upload folder of photos", bd=10, font=18, pady=10, command=open_dir)
-    btn_quality = Button(user, text="Filter by quality", bd=10, font=18, pady=10)
+    btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
+    btn_numentry = Entry(user, textvariable=num_var, bd=10, show=None, font=18)
+    btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
+    btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
     canvas = Canvas(user)
     text_area = Frame(user, width=10, height=10)
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
 
     btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
+    btn_numlable.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
+    btn_numentry.grid(row=1, column=2, sticky="ew", padx=5, pady=5)
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
 
