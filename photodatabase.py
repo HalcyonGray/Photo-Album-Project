@@ -174,24 +174,22 @@ def outputalldb(): # to be changed: combine tags on single photos
 
     for row in cur:
         print(row[0], "     ", row[1])
-        returrnstack.append(row[0])
-        returrnstack.append(row[1])
+        returrnstack.append(row[0], row[1])
     return returrnstack
 
 def buildAlbum(tags): # to be changed: combine tags on single photos
     database = r"photodata.db"
     conn = create_connection(database)
 
-    sql = ''' SELECT filelocation, quality FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id WHERE tagname=? ORDER BY quality ASC'''
+    sql = ''' SELECT filelocation FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id WHERE tagname=? ORDER BY quality ASC'''
     returrnstack = []
     cur = conn.cursor()
     cur.execute(sql, (tags,))
     conn.commit()
 
     for row in cur:
-        print(row[0], "     ", row[1])
+        print(row[0])
         returrnstack.append(row[0])
-        returrnstack.append(row[1])
     return returrnstack
 
 def deleteimage(photolocation):
