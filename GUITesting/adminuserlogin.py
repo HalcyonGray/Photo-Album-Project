@@ -28,6 +28,7 @@ def openAdmin():
     tag_var = StringVar()
     photobuttonlist = []
     photo_var = []  # true/false stack for tag upload
+    text_var = StringVar()
 
     # FUNCTION CALLS
     def open_file():
@@ -42,7 +43,6 @@ def openAdmin():
             text = input_file.read()
             txt_edit.insert(tk.END, text)
         admin.title(f"Simple Text Editor - {filepath}")
-
 
     def open_dir():
         """open dir for photos"""
@@ -97,6 +97,17 @@ def openAdmin():
                 photodatabase.insertphoto(i[0], tag)
         tag_var.set("")
 
+    def delete_img():
+        for i in photobuttonlist:
+            if i[1].get() != 0:
+                photodatabase.deleteimage(i[0])
+
+    def delete_tag():
+        tag = tag_var.get()
+        if (tag == ""):
+            return
+        tag_var.set("")
+
     def save_file():
         """Save the current file as a new file."""
         filepath = asksaveasfilename(
@@ -134,22 +145,21 @@ def openAdmin():
     # Initalize buttons for each tab
 
     # EDIT DATABASE TAB:
-    # needs commands, just empty buttons        
+    # needs commands, just empty buttons
     btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10)
     btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10)
-    btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10)
-    btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10)
-    btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
+    btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command=delete_tag)
+    btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10, command=delete_img)
+    btn_textentry = Entry(settings, textvariable=text_var, bd=10, show=None, font=18)
     text_area = Frame(settings, width=10, height=10)
     canvas = Canvas(settings)
-    
+
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
     btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
     btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     btn_deltag.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_delphoto.grid(row=1, column=0, sticky="ew", padx=5)
-
 
     # PHOTO UPLOAD TAB:
     btn_taglable = Label(photoUpload, text="Enter Tag Below: ", bd=10, font=18, pady=10)
@@ -164,10 +174,10 @@ def openAdmin():
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 
+
 # USER WINDOW
 # ---------------------------------------------------------------------
 def openUser():
-
     user = Toplevel(login)
     user.title("User")
     user.geometry("1200x500")
@@ -179,7 +189,7 @@ def openUser():
     photobuttonlist = []
     tagbuttonlist = []
 
-#FUNCTION CALLS
+    # FUNCTION CALLS
     def output_tags():
         taglist = photodatabase.outputalltags()
         for i, j in enumerate(taglist):
@@ -187,7 +197,7 @@ def openUser():
             print(j)
             var = IntVar()
             c = Checkbutton(text_area, font=18, variable=var)
-            panel = Label(text_area, text = j)
+            panel = Label(text_area, text=j)
             c.grid(row=3 + i, column=1)
             panel.grid(row=3 + i, column=2)
             photobuttonlist.append([j.strip(), var, c])
@@ -197,6 +207,7 @@ def openUser():
         scrollbartag.grid(row=3, column=3, sticky='ns')
         text_area.bind("<Configure>", update_scrollregion)
         canvastagout.update_idletasks()
+
     def build():
         """Build photo Album"""
         tag = tag_var.get()
@@ -216,7 +227,7 @@ def openUser():
         panel.image = img'''
 
         for i, j in enumerate(photolist):
-            if i < num_var.get() or num_var.get()==0:
+            if i < num_var.get() or num_var.get() == 0:
                 var = IntVar()
                 c = Checkbutton(text_area, font=18, variable=var)
                 imvar = Image.open(j)
@@ -237,7 +248,7 @@ def openUser():
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
 
-    #USER BUTTONS
+    # USER BUTTONS
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
     btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
@@ -248,7 +259,7 @@ def openUser():
     canvastagout = Canvas(user)
     text_area = Frame(user, width=10, height=10)
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
-    canvastagout.grid(row=3, column = 1 , pady=1, padx=1, sticky='ns')
+    canvastagout.grid(row=3, column=1, pady=1, padx=1, sticky='ns')
 
     btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
