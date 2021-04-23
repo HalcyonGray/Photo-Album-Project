@@ -174,7 +174,7 @@ def outputalldb(): # to be changed: combine tags on single photos
 
     for row in cur:
         print(row[0], "     ", row[1])
-        returrnstack.append(row[0], row[1])
+        returrnstack.append((row[0], row[1]))
     return returrnstack
 
 def buildAlbum(tags): # to be changed: combine tags on single photos
