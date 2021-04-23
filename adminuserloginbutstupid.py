@@ -82,6 +82,9 @@ def openAdmin():
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
 
+    def update_scrollregion2(event):
+        canvas2.configure(scrollregion=canvas2.bbox("all"))
+
     def save_Tag():
         """tag input for photo upload to database, etc."""
         tag = tag_var.get()
@@ -113,20 +116,25 @@ def openAdmin():
     def edit_database():
         stack = photodatabase.outputalldb()
         #print(stack[0][0])
-        while stack:
-            rownum = 3
-            refpic = stack.pop(0)
-            print(refpic[0])
-            var = IntVar()
-            c2 = Checkbutton(text_area2, font=18, variable=var)
-            imvar = Image.open(refpic[0])
-            imvar.thumbnail((100, 100))
-            img = ImageTk.PhotoImage(imvar)
-            panel = Label(text_area2, image=img)
-            panel.image = img
-            c2.grid(row=rownum, column=0)
-            panel.grid(row=rownum, column=1)
-            photobuttonlist.append([refpic[0].strip(), var, c2])
+        refpic = r""
+        for i, j in enumerate(stack):
+            if(refpic != j[0]):
+                '''rownum = 3
+                columnnum = 2
+                rownum = rownum + 1'''
+                refpic = j[0]
+                print(refpic)
+                var = IntVar()
+                c = Checkbutton(text_area2, font=18, variable=var)
+                imvar = Image.open(refpic)
+                imvar.thumbnail((100, 100))
+                img = ImageTk.PhotoImage(imvar)
+                panel2 = Label(text_area2, image=img)
+                panel2.image = img
+                #panel2 = Label(text_area2, text = j[0], font = 18)
+                c.grid(row=3+i, column=0)
+                panel2.grid(row=3+i, column=1)
+                photobuttonlist.append([refpic, var, c])
         canvas2.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbar2 = Scrollbar(settings, command=canvas2.yview)
         canvas2.config(yscrollcommand=scrollbar2.set)
@@ -134,8 +142,6 @@ def openAdmin():
         text_area2.bind("<Configure>", update_scrollregion2)
         canvas2.update_idletasks()
 
-    def update_scrollregion2(event):
-        canvas2.configure(scrollregion=canvas2.bbox("all"))
 
     '''def prev_click():
         global img
