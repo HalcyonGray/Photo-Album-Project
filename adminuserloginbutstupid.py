@@ -124,16 +124,18 @@ def openAdmin():
             img = ImageTk.PhotoImage(imvar)
             panel = Label(text_area2, image=img)
             panel.image = img
-            c.grid(row=rownum, column=0)
+            c2.grid(row=rownum, column=0)
             panel.grid(row=rownum, column=1)
             photobuttonlist.append([refpic[0].strip(), var, c2])
         canvas2.create_window(0, 0, anchor='nw', window=text_area2)
-        scrollbar = Scrollbar(settings, command=canvas2.yview)
-        canvas2.config(yscrollcommand=scrollbar.set)
-        scrollbar.grid(row=3, column=3, sticky='ns')
-        text_area.bind("<Configure>", update_scrollregion)
+        scrollbar2 = Scrollbar(settings, command=canvas2.yview)
+        canvas2.config(yscrollcommand=scrollbar2.set)
+        scrollbar2.grid(row=3, column=3, sticky='ns')
+        text_area2.bind("<Configure>", update_scrollregion2)
         canvas2.update_idletasks()
 
+    def update_scrollregion2(event):
+        canvas2.configure(scrollregion=canvas2.bbox("all"))
 
     '''def prev_click():
         global img
@@ -168,7 +170,7 @@ def openAdmin():
     text_area2 = Frame(settings, width=10, height=10)
     canvas2 = Canvas(settings)
     
-    canvas.grid(row=3, pady=1, padx=1, sticky='ns')
+    canvas2.grid(row=3, pady=1, padx=1, sticky='ns')
     btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
     btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
