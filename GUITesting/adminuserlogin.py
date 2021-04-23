@@ -134,8 +134,21 @@ def openAdmin():
     # Initalize buttons for each tab
 
     # EDIT DATABASE TAB:
-    btn_dataselect = Button(settings, text="Set Database Location", bd=40, font=18).pack(pady=10)
-    btn_setbuild = Button(settings, text="Set Album Build Location", bd=40, font=18).pack(pady=10)
+    # needs commands, just empty buttons        
+    btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10)
+    btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10)
+    btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10)
+    btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10)
+    btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
+    text_area = Frame(settings, width=10, height=10)
+    canvas = Canvas(settings)
+    
+    canvas.grid(row=3, pady=1, padx=1, sticky='ns')
+    btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
+    btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+    btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
+    btn_deltag.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+    btn_delphoto.grid(row=1, column=0, sticky="ew", padx=5)
 
 
     # PHOTO UPLOAD TAB:
@@ -161,6 +174,7 @@ def openUser():
     user.configure(bg='blue')
     photolist = []
     taglist = []
+    text_var = StringVar()
     tag_var = StringVar()
     num_var = IntVar()
     photobuttonlist = []
