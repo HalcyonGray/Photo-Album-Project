@@ -174,7 +174,6 @@ def openUser():
     user.configure(bg='blue')
     photolist = []
     taglist = []
-    text_var = StringVar()
     tag_var = StringVar()
     num_var = IntVar()
     photobuttonlist = []
