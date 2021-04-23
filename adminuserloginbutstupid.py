@@ -30,23 +30,9 @@ def openAdmin():
     photo_var = []  # true/false stack for tag upload
 
     # FUNCTION CALLS
-    '''def open_file():
-        """Open a file for editing."""
-        filepath = askopenfilename(
-            filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
-        )
-        if not filepath:
-            return
-        txt_edit.delete("1.0", tk.END)
-        with open(filepath, "r") as input_file:
-            text = input_file.read()
-            txt_edit.insert(tk.END, text)
-        admin.title(f"Simple Text Editor - {filepath}")'''
-
 
     def open_dir():
         """open dir for photos"""
-        photobuttonlist=[]
         filepath = askdirectory()
         if not filepath:
             return
@@ -54,12 +40,6 @@ def openAdmin():
             for file in files:
                 if file.endswith(".png") | file.endswith(".jpg"):
                     photolist.append(os.path.join(root, file))
-
-        '''img = Image.open(filepath)
-        img.thumbnail((400, 400))
-        img = ImageTk.PhotoImage(img)
-        panel = Label(photoUpload, image=img)
-        panel.image = img'''
 
         for i, j in enumerate(photolist):
             var = IntVar()
@@ -101,29 +81,11 @@ def openAdmin():
                 photodatabase.insertphoto(i[0], tag)
         tag_var.set("")
 
-    '''def save_file():
-        """Save the current file as a new file."""
-        filepath = asksaveasfilename(
-            defaultextension="txt",
-            filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
-        )
-        if not filepath:
-            return
-        with open(filepath, "w") as output_file:
-            text = txt_edit.get(1.0, tk.END)
-            output_file.write(text)
-        admin.title(f"Simple Text Editor - {filepath}")'''
-
     def edit_database():
-        photobuttonlist = []
         stack = photodatabase.outputalldb()
-        #print(stack[0][0])
         refpic = r""
         for i, j in enumerate(stack):
             if(refpic != j[0]):
-                '''rownum = 3
-                columnnum = 2
-                rownum = rownum + 1'''
                 refpic = j[0]
                 print(refpic)
                 var = IntVar()
@@ -143,19 +105,17 @@ def openAdmin():
         scrollbar2.grid(row=3, column=3, sticky='ns')
         text_area2.bind("<Configure>", update_scrollregion2)
         canvas2.update_idletasks()
+    def delete_img():
+        for i in photobuttonlist:
+            if i[1].get() != 0:
+                photodatabase.deleteimage(i[0])
 
-
-    '''def prev_click():
-        global img
-        window = Toplevel()
-        window.title("Image Preview")
-        window.geometry("1280x720")
-        window.configure(background='white')
-        path = variable
-        img = ImageTk.PhotoImage(Image.open(path))
-        panel = Label(window, image = img)
-        panel.pack(side = "bottom", fill = "both", expand = "yes")
-        window.mainloop()'''
+    def delete_tag():
+        tag = text_var.get()
+        if (tag == ""):
+            return
+        photodatabase.deletetag(tag)
+        text_var.set("")
 
     txt_edit = tk.Text(admin)  # idk what this does but i put it in cause it was needed
 
@@ -172,8 +132,8 @@ def openAdmin():
     # needs commands, just empty buttons        
     btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
     btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10)
-    btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10)
-    btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10)
+    btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command = delete_tag)
+    btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10, command = delete_img)
     btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
     canvas2 = Canvas(settings)
     text_area2 = Frame(settings, width=10, height=10)
@@ -236,19 +196,6 @@ def openUser():
         """Build photo Album"""
         tag = tag_var.get()
         photolist = photodatabase.buildAlbum(tag)
-        '''filepath = askdirectory()
-        if not filepath:
-            return
-        for root, dirs, files in os.walk(filepath):  # all .png in folder
-            for file in files:
-                if file.endswith(".png") | file.endswith(".jpg"):
-                    photolist.append(os.path.join(root, file))'''
-
-        '''img = Image.open(filepath)
-        img.thumbnail((400, 400))
-        img = ImageTk.PhotoImage(img)
-        panel = Label(photoUpload, image=img)
-        panel.image = img'''
 
         for i, j in enumerate(photolist):
             if i < num_var.get() or num_var.get()==0:
@@ -268,9 +215,6 @@ def openUser():
         scrollbar.grid(row=3, column=3, sticky='ns')
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
-
-    def update_scrollregion(event):
-        canvas.configure(scrollregion=canvas.bbox("all"))
 
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
