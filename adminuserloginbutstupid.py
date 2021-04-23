@@ -30,7 +30,7 @@ def openAdmin():
     photo_var = []  # true/false stack for tag upload
 
     # FUNCTION CALLS
-    def open_file():
+    '''def open_file():
         """Open a file for editing."""
         filepath = askopenfilename(
             filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
@@ -41,11 +41,12 @@ def openAdmin():
         with open(filepath, "r") as input_file:
             text = input_file.read()
             txt_edit.insert(tk.END, text)
-        admin.title(f"Simple Text Editor - {filepath}")
+        admin.title(f"Simple Text Editor - {filepath}")'''
 
 
     def open_dir():
         """open dir for photos"""
+        photobuttonlist=[]
         filepath = askdirectory()
         if not filepath:
             return
@@ -100,7 +101,7 @@ def openAdmin():
                 photodatabase.insertphoto(i[0], tag)
         tag_var.set("")
 
-    def save_file():
+    '''def save_file():
         """Save the current file as a new file."""
         filepath = asksaveasfilename(
             defaultextension="txt",
@@ -111,9 +112,10 @@ def openAdmin():
         with open(filepath, "w") as output_file:
             text = txt_edit.get(1.0, tk.END)
             output_file.write(text)
-        admin.title(f"Simple Text Editor - {filepath}")
+        admin.title(f"Simple Text Editor - {filepath}")'''
 
     def edit_database():
+        photobuttonlist = []
         stack = photodatabase.outputalldb()
         #print(stack[0][0])
         refpic = r""
@@ -173,10 +175,10 @@ def openAdmin():
     btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10)
     btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10)
     btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
-    text_area2 = Frame(settings, width=10, height=10)
     canvas2 = Canvas(settings)
+    text_area2 = Frame(settings, width=10, height=10)
     
-    canvas2.grid(row=3, pady=1, padx=1, sticky='ns')
+    canvas2.grid(row=3, column=0, pady=1, padx=1, sticky='ns', show=None)
     btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
     btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
