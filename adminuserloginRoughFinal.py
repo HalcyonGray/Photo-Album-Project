@@ -179,25 +179,15 @@ def openUser():
     user.title("User")
     user.geometry("1200x500")
     user.configure(bg='blue')
-    photolist = []
-    taglist = []
     tag_var = StringVar()
     num_var = IntVar()
-    photobuttonlist = []
-    tagbuttonlist = []
 
 #FUNCTION CALLS
     def output_tags():
         taglist = photodatabase.outputalltags()
         for i, j in enumerate(taglist):
-            print(i)
-            print(j)
-            var = IntVar()
-            c = Checkbutton(text_area2, font=18, variable=var)
             panel = Label(text_area2, text = j)
-            c.grid(row=3 + i, column=1)
-            panel.grid(row=3 + i, column=2)
-            photobuttonlist.append([j.strip(), var, c])
+            panel.grid(row=3 + i)
         canvastagout.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbartag = Scrollbar(user, command=canvas.yview)
         canvastagout.config(yscrollcommand=scrollbartag.set)
@@ -211,16 +201,12 @@ def openUser():
 
         for i, j in enumerate(photolist):
             if i < num_var.get() or num_var.get()==0:
-                var = IntVar()
-                c = Checkbutton(text_area, font=18, variable=var)
                 imvar = Image.open(j)
-                imvar.thumbnail((300, 300))
+                imvar.thumbnail((400, 400))
                 img = ImageTk.PhotoImage(imvar)
                 panel = Label(text_area, image=img)
                 panel.image = img
-                c.grid(row=3 + i, column=0)
-                panel.grid(row=3 + i, column=1)
-                photobuttonlist.append([j.strip(), var, c])
+                panel.grid(row=3 + i)
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(user, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
