@@ -96,13 +96,18 @@ def openAdmin():
                 img = ImageTk.PhotoImage(imvar)
                 panel2 = Label(text_area2, image=img)
                 panel2.image = img
+                panel3 = Label(text_area2, text = j[1], font = 18)
                 #panel2 = Label(text_area2, text = j[1], font = 18)
                 c.grid(row=3+i, column=0)
                 panel2.grid(row=3+i, column=1)
+                panel3.grid(row=3+i, column=2)
                 photobuttonlist.append([refpic, var, c])
+                rowtemp = 3+i
+                columntemp = 3
             else:
-                panel3 = Label(text_area2, text = j[1], font = 18)
-                panel3.grid(row=3+i, column=3+i)
+                panel4 = Label(text_area2, text = j[1], font = 18)
+                panel4.grid(row=rowtemp, column=columntemp)
+                columntemp = columntemp + 1
 
 
             
