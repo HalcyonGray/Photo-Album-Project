@@ -65,6 +65,8 @@ def openAdmin():
 
     def update_scrollregion2(event):
         canvas2.configure(scrollregion=canvas2.bbox("all"))
+    def update_scrollregion3(event):
+        canvas3.configure(scrollregion=canvas3.bbox("all"))    
 
     def save_Tag():
         """tag input for photo upload to database, etc."""
@@ -87,8 +89,6 @@ def openAdmin():
         for i, j in enumerate(stack):
             if(refpic != j[0]):
                 refpic = j[0]
-                print(refpic)
-                print(j[1])
                 var = IntVar()
                 c = Checkbutton(text_area2, font=18, variable=var)
                 imvar = Image.open(refpic)
@@ -127,16 +127,18 @@ def openAdmin():
         text_var.set("")
         
         #needs scroll region update
-    def output_tags3():
+    
+    def output_tags():
         taglist = photodatabase.outputalltags()
         for i, j in enumerate(taglist):
+            print(j)
             panel = Label(text_area3, text = j)
             panel.grid(row=3 + i)
         canvas3.create_window(0, 0, anchor='nw', window=text_area3)
-        scrollbartag = Scrollbar(user, command=canvas.yview)
+        scrollbartag = Scrollbar(settings, command=canvas3.yview)
         canvas3.config(yscrollcommand=scrollbartag.set)
         scrollbartag.grid(row=3, column=3, sticky='ns')
-        text_area3.bind("<Configure>", update_scrollregion)
+        text_area3.bind("<Configure>", update_scrollregion3)
         canvas3.update_idletasks()
 
     txt_edit = tk.Text(admin)  # idk what this does but i put it in cause it was needed
@@ -150,10 +152,9 @@ def openAdmin():
 
     # Initalize buttons for each tab
 
-    # EDIT DATABASE TAB:
-    # needs commands, just empty buttons        
+    # EDIT DATABASE TAB:   
     btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
-    btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10, command=output_tags3)
+    btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10, command=output_tags)
     btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command = delete_tag)
     btn_delphoto = Button(settings, text="Delete Selected Photos", bd=10, font=18, pady=10, command = delete_img)
     btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
@@ -163,7 +164,7 @@ def openAdmin():
     text_area3 = Frame(canvas3, width=10, height=10)
     
     canvas2.grid(row=3, column=0, pady=1, padx=1, sticky='ns', show=None)
-    canvas3.grid(row=3, column=2, pady=1, padx=1, sticky='ns', show=None)
+    canvas3.grid(row=3, column=2, pady=1, padx=1, sticky='ns')
     btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
     btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
@@ -205,7 +206,7 @@ def openUser():
         scrollbartag = Scrollbar(user, command=canvas.yview)
         canvastagout.config(yscrollcommand=scrollbartag.set)
         scrollbartag.grid(row=3, column=3, sticky='ns')
-        text_area2.bind("<Configure>", update_scrollregion)
+        text_area2.bind("<Configure>", update_scrollregion2)
         canvastagout.update_idletasks()
     def build():
         """Build photo Album"""
@@ -229,6 +230,8 @@ def openUser():
 
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
+    def update_scrollregion2(event):
+        canvastagout.configure(scrollregion=canvastagout.bbox("all"))
 
     #USER BUTTONS
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
