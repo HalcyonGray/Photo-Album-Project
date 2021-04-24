@@ -88,6 +88,7 @@ def openAdmin():
             if(refpic != j[0]):
                 refpic = j[0]
                 print(refpic)
+                print(j[1])
                 var = IntVar()
                 c = Checkbutton(text_area2, font=18, variable=var)
                 imvar = Image.open(refpic)
@@ -95,10 +96,16 @@ def openAdmin():
                 img = ImageTk.PhotoImage(imvar)
                 panel2 = Label(text_area2, image=img)
                 panel2.image = img
-                #panel2 = Label(text_area2, text = j[0], font = 18)
+                #panel2 = Label(text_area2, text = j[1], font = 18)
                 c.grid(row=3+i, column=0)
                 panel2.grid(row=3+i, column=1)
                 photobuttonlist.append([refpic, var, c])
+            else:
+                panel3 = Label(text_area2, text = j[1], font = 18)
+                panel3.grid(row=3+i, column=3+i)
+
+
+            
         canvas2.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbar2 = Scrollbar(settings, command=canvas2.yview)
         canvas2.config(yscrollcommand=scrollbar2.set)
