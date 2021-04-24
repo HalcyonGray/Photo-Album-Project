@@ -148,7 +148,7 @@ def openAdmin():
     btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10, command = delete_img)
     btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
     canvas2 = Canvas(settings)
-    text_area2 = Frame(settings, width=10, height=10)
+    text_area2 = Frame(canvas2, width=10, height=10)
     
     canvas2.grid(row=3, column=0, pady=1, padx=1, sticky='ns', show=None)
     btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
@@ -164,7 +164,7 @@ def openAdmin():
     btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
     btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
     canvas = Canvas(photoUpload)
-    text_area = Frame(photoUpload, width=10, height=10)
+    text_area = Frame(canvas, width=10, height=10)
     canvas.grid(row=3, pady=1, padx=1, sticky='ns')
     btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
