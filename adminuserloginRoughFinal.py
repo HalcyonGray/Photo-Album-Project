@@ -46,7 +46,7 @@ def openAdmin():
             c = Checkbutton(text_area, font=18, variable=var)
             # im = Button(photoUpload, text="Preview Image", bd=10, font=18, command=prev_click) #if we want to use buttons
             imvar = Image.open(j)
-            imvar.thumbnail((100, 100))
+            imvar.thumbnail((300, 300))
             img = ImageTk.PhotoImage(imvar)
             panel = Label(text_area, image=img)
             panel.image = img
@@ -56,7 +56,7 @@ def openAdmin():
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(photoUpload, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
-        scrollbar.grid(row=3, column=3, sticky='ns')
+        scrollbar.grid(row=3, column=1, sticky='ns')
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
@@ -107,14 +107,11 @@ def openAdmin():
             else:
                 panel4 = Label(text_area2, text = j[1], font = 18)
                 panel4.grid(row=rowtemp, column=columntemp)
-                columntemp = columntemp + 1
-
-
-            
+                columntemp = columntemp + 1  
         canvas2.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbar2 = Scrollbar(settings, command=canvas2.yview)
         canvas2.config(yscrollcommand=scrollbar2.set)
-        scrollbar2.grid(row=3, column=3, sticky='ns')
+        scrollbar2.grid(row=3, column=1, sticky='ns')
         text_area2.bind("<Configure>", update_scrollregion2)
         canvas2.update_idletasks()
     def delete_img():
@@ -145,12 +142,15 @@ def openAdmin():
     btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
     btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10)
     btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command = delete_tag)
-    btn_delphoto = Button(settings, text="Delete Photo", bd=10, font=18, pady=10, command = delete_img)
+    btn_delphoto = Button(settings, text="Delete Selected Photos", bd=10, font=18, pady=10, command = delete_img)
     btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
     canvas2 = Canvas(settings)
     text_area2 = Frame(canvas2, width=10, height=10)
+    canvas3 = Canvas(settings)
+    text_area3 = Frame(canvas3, width=10, height=10)
     
     canvas2.grid(row=3, column=0, pady=1, padx=1, sticky='ns', show=None)
+    canvas3.grid(row=3, column=2, pady=1, padx=1, sticky='ns', show=None)
     btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
     btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
