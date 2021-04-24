@@ -120,11 +120,11 @@ def openAdmin():
                 photodatabase.deleteimage(i[0])
 
     def delete_tag():
-        tag = text_var.get()
+        tag = tag_var.get()
         if (tag == ""):
             return
         photodatabase.deletetag(tag)
-        text_var.set("")
+        tag_var.set("")
         
         #needs scroll region update
     
