@@ -125,6 +125,19 @@ def openAdmin():
             return
         photodatabase.deletetag(tag)
         text_var.set("")
+        
+        #needs scroll region update
+    def output_tags3():
+        taglist = photodatabase.outputalltags()
+        for i, j in enumerate(taglist):
+            panel = Label(text_area3, text = j)
+            panel.grid(row=3 + i)
+        canvas3.create_window(0, 0, anchor='nw', window=text_area3)
+        scrollbartag = Scrollbar(user, command=canvas.yview)
+        canvas3.config(yscrollcommand=scrollbartag.set)
+        scrollbartag.grid(row=3, column=3, sticky='ns')
+        text_area3.bind("<Configure>", update_scrollregion)
+        canvas3.update_idletasks()
 
     txt_edit = tk.Text(admin)  # idk what this does but i put it in cause it was needed
 
@@ -140,7 +153,7 @@ def openAdmin():
     # EDIT DATABASE TAB:
     # needs commands, just empty buttons        
     btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
-    btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10)
+    btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10, command=output_tags3)
     btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command = delete_tag)
     btn_delphoto = Button(settings, text="Delete Selected Photos", bd=10, font=18, pady=10, command = delete_img)
     btn_textentry = Entry(settings, textvariable=tag_var, bd=10, show=None, font=18)
