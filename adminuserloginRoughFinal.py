@@ -144,8 +144,8 @@ def openAdmin():
     txt_edit = tk.Text(admin)  # idk what this does but i put it in cause it was needed
 
     # Initalize different tabs
-    settings = Frame(tabs, width=500, height=500, bg="pink")  # bg=background color
-    photoUpload = Frame(tabs, width=500, height=500, bg="purple")
+    settings = Frame(tabs, width=500, height=500)  # bg=background color
+    photoUpload = Frame(tabs, width=500, height=500)
 
     tabs.add(photoUpload, text="Photo Upload")
     tabs.add(settings, text="Edit Database")
@@ -192,7 +192,6 @@ def openUser():
     user = Toplevel(login)
     user.title("User")
     user.geometry("1200x500")
-    user.configure(bg='blue')
     tag_var = StringVar()
     num_var = IntVar()
 
