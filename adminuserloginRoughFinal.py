@@ -73,15 +73,25 @@ def openAdmin():
         tag = tag_var.get()
         if (tag == ""):
             return
-        # operations here
-        '''for i in photobuttonlist:
-            if i[1].get()==0:
-                # upload to database with tag
-                i[2].destroy()'''
+
+        popup = tk.Toplevel()
+        tk.Label(popup, text="Files being downloaded").grid(row=0,column=0)
+
+        progress = 0
+        progress_var = tk.DoubleVar()
+        progress_bar = ttk.Progressbar(popup, variable=progress_var, maximum=100)
+        progress_bar.grid(row=1, column=0)#.pack(fill=tk.X, expand=1, side=tk.BOTTOM)
+        popup.pack_slaves()
+
+        progress_step = float(100.0/len(photobuttonlist))
         for i in photobuttonlist:
+            popup.update()
+            progress += progress_step
+            progress_var.set(progress)
             if i[1].get() != 0:
                 photodatabase.insertphoto(i[0], tag)
         tag_var.set("")
+        popup.destroy()
 
     def edit_database():
         stack = photodatabase.outputalldb()
@@ -193,6 +203,8 @@ def openAdmin():
     btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+    edit_database()
+    output_tags()
 
 # USER WINDOW
 # ---------------------------------------------------------------------
