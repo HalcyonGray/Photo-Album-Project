@@ -40,7 +40,7 @@ def openAdmin():
             for file in files:
                 if file.endswith(".png") | file.endswith(".jpg"):
                     photolist.append(os.path.join(root, file))
-
+        clear(text_area)
         for i, j in enumerate(photolist):
             var = IntVar()
             c = Checkbutton(text_area, font=18, variable=var)
@@ -118,6 +118,8 @@ def openAdmin():
         for i in photobuttonlist:
             if i[1].get() != 0:
                 photodatabase.deleteimage(i[0])
+        clear(text_area2)
+        edit_database()
 
     def delete_tag():
         tag = tag_var.get()
@@ -125,6 +127,10 @@ def openAdmin():
             return
         photodatabase.deletetag(tag)
         tag_var.set("")
+        clear(text_area2)
+        clear(text_area3)
+        edit_database()
+        output_tags()
         
         #needs scroll region update
     
@@ -140,8 +146,11 @@ def openAdmin():
         scrollbartag.grid(row=3, column=3, sticky='ns')
         text_area3.bind("<Configure>", update_scrollregion3)
         canvas3.update_idletasks()
-
-    txt_edit = tk.Text(admin)  # idk what this does but i put it in cause it was needed
+    
+    def clear(framename):
+        list = framename.grid_slaves()
+        for l in list:
+            l.destroy()
 
     # Initalize different tabs
     settings = Frame(tabs, width=500, height=500)  # bg=background color
@@ -209,6 +218,7 @@ def openUser():
         canvastagout.update_idletasks()
     def build():
         """Build photo Album"""
+        clear(text_area)
         tag = tag_var.get()
         photolist = photodatabase.buildAlbum(tag)
 
@@ -231,6 +241,10 @@ def openUser():
         canvas.configure(scrollregion=canvas.bbox("all"))
     def update_scrollregion2(event):
         canvastagout.configure(scrollregion=canvastagout.bbox("all"))
+    def clear(framename):
+        list = framename.grid_slaves()
+        for l in list:
+            l.destroy()
 
     #USER BUTTONS
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
