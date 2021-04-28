@@ -211,6 +211,7 @@ def openAdmin():
     #btn_save.grid(row=1, column=0, sticky="ew", padx=5)
     edit_database()
     output_tags()
+    login.wm_state('iconic')
 
 
 # USER WINDOW
@@ -298,6 +299,7 @@ def openUser():
     #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     #btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
     output_tags()
+    login.wm_state('iconic')
 
 
 # LOGIN WINDOW
