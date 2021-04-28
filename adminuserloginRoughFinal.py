@@ -153,7 +153,7 @@ def openAdmin():
         canvas2.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbartag = Scrollbar(admin, command=canvas2.yview)
         canvas2.config(yscrollcommand=scrollbartag.set)
-        scrollbartag.grid(row=2, column=3, sticky='ns')
+        scrollbartag.grid(row=2, column=7, sticky='ns')
         text_area2.bind("<Configure>", update_scrollregion2)
         canvas2.update_idletasks()
 
@@ -192,9 +192,9 @@ def openAdmin():
 
 
     canvas.grid(row=2, column=0, pady=1, padx=1, sticky='ns', show=None)
-    canvas2.grid(row=2, column=2, pady=1, padx=1, sticky='ns', show=None)
+    canvas2.grid(row=2, column=2, pady=1, padx=1, sticky='ns', show=None, columnspan=4)
 
-    btn_textentry.grid(row=0, column=2, sticky="ew", padx=5, pady=5)
+    btn_textentry.grid(row=0, column=2, sticky="w", padx=5, pady=5)
     #btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     #btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
     #btn_deltag.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
