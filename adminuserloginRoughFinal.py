@@ -55,12 +55,16 @@ def openAdmin():
         scrollbar = Scrollbar(admin, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
         scrollbar.grid(row=2, column=1, sticky='ns')
+        
+        scrollbar2 = Scrollbar(admin, command=canvas.xview, orient='horizontal')
+        canvas.config(xscrollcommand=scrollbar2.set)
+        scrollbar2.grid(row=3, column=0, sticky='ew')
+        
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
-
 
 
     def update_scrollregion2(event):
