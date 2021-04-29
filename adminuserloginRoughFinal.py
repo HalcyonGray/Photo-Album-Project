@@ -237,7 +237,7 @@ def openUser():
         canvastagout.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbartag = Scrollbar(user, command=canvas.yview)
         canvastagout.config(yscrollcommand=scrollbartag.set)
-        scrollbartag.grid(row=3, column=3, sticky='ns')
+        scrollbartag.grid(row=3, column=12, sticky='ns')
         text_area2.bind("<Configure>", update_scrollregion2)
         canvastagout.update_idletasks()
 
@@ -258,7 +258,7 @@ def openUser():
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(user, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
-        scrollbar.grid(row=3, column=12, sticky='ns')
+        scrollbar.grid(row=3, column=3, sticky='ns')
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
