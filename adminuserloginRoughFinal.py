@@ -272,6 +272,7 @@ def openUser():
         list = framename.grid_slaves()
         for l in list:
             l.destroy()
+            
 
     # USER BUTTONS
 
@@ -282,11 +283,12 @@ def openUser():
     file_menu.add_command(label="Album Build", command=build)
     #Creates File in menu
     uploadMenu.add_cascade(label="File", menu=file_menu)
+     
 
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
-    btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
     btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
     btn_numentry = Entry(user, textvariable=num_var, bd=10, show=None, font=18)
+    btn_spinbox = Spinbox(user, from_= 1, to = 500)
     #btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
     #btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
     canvas = Canvas(user)
@@ -296,8 +298,8 @@ def openUser():
     canvas.grid(row=3, column=0, pady=1, padx=1, sticky='ns', columnspan=2)
     canvastagout.grid(row=3, column=5, pady=1, padx=1, sticky='ns', columnspan=5)
 
+    btn_spinbox.grid(row=1, column=0, padx=5, pady=5, columnspan=5)
     btn_taglable.grid(row=0, column=0, padx=5, pady=5, columnspan=5)
-    btn_tagentry.grid(row=1, column=0, padx=5, pady=5, columnspan=5)
     btn_numlable.grid(row=0, column=5, padx=5, pady=5, columnspan=5)
     btn_numentry.grid(row=1, column=5, padx=5, pady=5, columnspan=5)
     #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
