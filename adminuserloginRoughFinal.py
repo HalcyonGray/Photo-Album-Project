@@ -33,6 +33,8 @@ def openAdmin():
     def open_dir():
         """open dir for photos"""
         filepath = askdirectory()
+        clear(text_area2)
+        output_tags()
         if not filepath:
             return
         for root, dirs, files in os.walk(filepath):  # all .png in folder
@@ -94,9 +96,13 @@ def openAdmin():
                 photodatabase.insertphoto(i[0], tag)
         tag_var.set("")
         popup.destroy()
+        clear(text_area2)
+        output_tags()
 
     def edit_database():
         stack = photodatabase.outputalldb()
+        clear(text_area2)
+        output_tags()
         refpic = r""
         clear(text_area)
         for i, j in enumerate(stack):
@@ -141,9 +147,9 @@ def openAdmin():
             return
         photodatabase.deletetag(tag)
         tag_var.set("")
-        clear(text_area2)
         clear(text_area)
         edit_database()
+        clear(text_area2)
         output_tags()
 
         # needs scroll region update
@@ -173,13 +179,14 @@ def openAdmin():
     admin.config(menu=uploadMenu)
     file_menu = Menu(uploadMenu)
     # Menu item with command
-    file_menu.add_command(label="Photo Upload", command=open_dir)
+    file_menu.add_command(label="Photo Upload Mode", command=open_dir)
     file_menu.add_command(label="Save With Tag", command=save_Tag)
-    file_menu.add_command(label="Edit Database", command=edit_database)
+    file_menu.add_separator()
+    file_menu.add_command(label="Edit Database Mode", command=edit_database)
     file_menu.add_command(label="Delete Tag", command=delete_tag)
     file_menu.add_command(label="Delete Photo", command=delete_img)
     #Creates File in menu
-    uploadMenu.add_cascade(label="File", menu=file_menu)
+    uploadMenu.add_cascade(label="Commands", menu=file_menu)
 
     # Initalize buttons for each tab
 
@@ -214,7 +221,6 @@ def openAdmin():
     #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     #btn_save.grid(row=1, column=0, sticky="ew", padx=5)
     edit_database()
-    output_tags()
     login.wm_state('iconic')
 
 
