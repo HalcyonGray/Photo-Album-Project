@@ -76,7 +76,7 @@ def createphoto(conn, task):
 
         return cur.lastrowid
     except:
-        sql = ''' SELECT id FROM photos WHERE filelocation=?''' #add quality when implemented
+        sql = ''' SELECT id FROM photos WHERE filelocation=?'''
 
 
         cur = conn.cursor()
@@ -97,7 +97,7 @@ def createtags(conn, task):
         return cur.lastrowid
     
     except:
-        sql = ''' SELECT id FROM tags WHERE tagname=?''' #add quality when implemented
+        sql = ''' SELECT id FROM tags WHERE tagname=?'''
 
 
         cur = conn.cursor()
@@ -113,7 +113,7 @@ def insertphoto(photolocation, tags): #add tags after photolocation
     database = r"photodata.db"    
     conn = create_connection(database)
 
-    formatphoto= (photolocation)#add quality after location when implemented
+    formatphoto= (photolocation)
     formattag= ([tags])
 
     photoid = createphoto(conn, formatphoto)
@@ -131,7 +131,7 @@ def insertphoto(photolocation, tags): #add tags after photolocation
         print("reference insert duplicate")
 
 
-def outputquery(tags): #to be changed: add multi tag search
+def outputquery(tags): 
     database = r"photodata.db"
     conn = create_connection(database)
 
@@ -162,7 +162,7 @@ def outputalltags():
         returrnstack.append(row[0])
     return returrnstack
 
-def outputalldb(): # to be changed: combine tags on single photos
+def outputalldb(): 
     database = r"photodata.db"
     conn = create_connection(database)
 
@@ -177,7 +177,7 @@ def outputalldb(): # to be changed: combine tags on single photos
         returrnstack.append((row[0], row[1]))
     return returrnstack
 
-def buildAlbum(tags): # to be changed: combine tags on single photos
+def buildAlbum(tags): 
     database = r"photodata.db"
     conn = create_connection(database)
 
