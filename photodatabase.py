@@ -4,6 +4,7 @@ import imquality.brisque as brisque
 from PIL import Image
 import os#for testing
 #SQLITE studio is useful for checking the database
+#probably should create global database location variable or  have gui save it and input location on ever def call
 def create_connection(db_file):
 
     conn = None
@@ -25,8 +26,7 @@ def create_table(conn, create_table_sql):
 
 
 def Createdatabase():
-    database = r"photodata.db" #must create C:\sqlite\db\  folders first or change destination
-    #database = r"C:\sqlite\db\photodata.db"
+    database = r"photodata.db" 
 
 
     #we are using a many to many realation strategy
@@ -61,10 +61,12 @@ def Createdatabase():
         print("Error! cannot create the database connection.")
 
 
-def createphoto(conn, task):
+def uploadphoto(task):
     try:
+        database = r"photodata.db"    
+        conn = create_connection(database)
+        
         sql = ''' INSERT INTO photos(filelocation, quality) VALUES(?,?)'''
-
         print(task)
         img = Image.open(task)
         quality = brisque.score(img)
@@ -72,19 +74,27 @@ def createphoto(conn, task):
         phototask = (task, abs(quality))
         cur = conn.cursor()
         cur.execute(sql, phototask)
+        createtags(conn, ('notag',))
+        insertphoto(task, 'notag')
         conn.commit()
 
         return cur.lastrowid
     except:
-        sql = ''' SELECT id FROM photos WHERE filelocation=?'''
-
+        sql = ''' SELECT id FROM photos WHERE filelocation=?''' 
 
         cur = conn.cursor()
         cur.execute(sql, (task,))
         conn.commit()
 
         return cur.fetchone()[0]
+def findphoto(conn, task):
+    sql = ''' SELECT id FROM photos WHERE filelocation=?'''
 
+    cur = conn.cursor()
+    cur.execute(sql, (task,))
+    conn.commit()
+
+    return cur.fetchone()[0]
 
 def createtags(conn, task):
     try:
@@ -109,14 +119,14 @@ def createtags(conn, task):
 
 
 
-def insertphoto(photolocation, tags): #add tags after photolocation
+def insertphoto(photolocation, tags): 
     database = r"photodata.db"    
     conn = create_connection(database)
 
     formatphoto= (photolocation)
     formattag= ([tags])
 
-    photoid = createphoto(conn, formatphoto)
+    photoid = findphoto(conn, formatphoto)
     tagid = createtags(conn, formattag)
 
     #reference table
@@ -214,7 +224,6 @@ def deletetag(tag):
     sql1 = ''' SELECT id FROM tags where tagname = ?'''
     sql2 = ''' DELETE FROM tags WHERE id = ?'''
     sql3 = ''' DELETE FROM reference WHERE tagid = ?'''
-
     cur = conn.cursor()
     cur.execute(sql1, (tag,))
     for row in cur:
@@ -222,34 +231,32 @@ def deletetag(tag):
         cur.execute(sql3, (row[0],))
     conn.commit()
 
+def deletereference(photolocation,tag):
+    database = r"photodata.db"
+    conn = create_connection(database)
+    
+    sql1 = ''' SELECT id FROM tags where tagname = ?'''
+    sql2 = ''' SELECT id FROM photos where filelocation = ?'''
+    sql3 = ''' DELETE FROM reference WHERE tagid = ? AND photoid = ?'''
+    sql4 = ''' SELECT COUNT(1) FROM reference WHERE photoid = ?'''
+    cur = conn.cursor()
+    cur.execute(sql1, (tag,))
+    r1 = cur.fetchone()
+    print(r1[0])
+    cur.execute(sql2, (photolocation,))
+    r2 = cur.fetchone()
+    cur.execute(sql3, (r1[0], r2[0]))
+    cur.execute(sql4, (photolocation,))
+    exist = cur.fetchone()
+    print(exist)
+    if(exist[0] != 1):
+        insertphoto(photolocation, 'notag')
+    conn.commit()
 
 #testing
 if __name__ == '__main__': #testing
     Createdatabase()
-    test2 = "database_test"
-    '''test = r'F:/halcyon/4812.jpg'
-    insertphoto(test, test2)
-    input()'''
-    '''for root, dirs, files in os.walk("F:\halcyon"): #all .png in folder
-        for file in files:
-            if file.endswith(".jpg"):
-                insertphoto(os.path.join(root, file), test2)'''
-    '''print()
-    input()
-    outputquery(test2)
-    input()
-    print()
-    outputalltags()
-    input()
-    print()
-    outputalldb()
-    input()
-    for root, dirs, files in os.walk("F:\pictures"): #all .png in folder
-        for file in files:
-            if file.endswith(".png"):
-                insertphoto(os.path.join(root, file), test2)
-    input()'''
-    buildAlbum(test2)
-    #outputalldb()
+    uploadphoto(r'F:\halcyon\4812.jpg')
+    insertphoto(r'F:\halcyon\4812.jpg', 'test')
+    deletereference(r'F:\halcyon\4812.jpg', 'test')
 
-    
