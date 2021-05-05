@@ -63,7 +63,7 @@ def Createdatabase():
 
 def createphoto(conn, task):
     try:
-        sql = ''' INSERT INTO photos(filelocation, quality) VALUES(?,?)''' #add quality when implemented
+        sql = ''' INSERT INTO photos(filelocation, quality) VALUES(?,?)'''
 
         print(task)
         img = Image.open(task)
