@@ -41,6 +41,7 @@ def openAdmin():
             for file in files:
                 if file.endswith(".png") | file.endswith(".jpg"):
                     photolist.append(os.path.join(root, file))
+                    photodatabase.uploadphoto(os.path.join(root, file))
         clear(text_area)
         for i, j in enumerate(photolist):
             var = IntVar()
