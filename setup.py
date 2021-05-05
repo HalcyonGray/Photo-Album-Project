@@ -3,8 +3,6 @@ import sys
 
 subprocess.run('pip install tk')
 subprocess.run('pip install image-quality')
-subprocess.run('pip install os-win')
-subprocess.run('pip install PILLOW')
 subprocess.run('pip install pysqlite3')
 
 #Lists all installed Python Packages
