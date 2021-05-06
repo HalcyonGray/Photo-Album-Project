@@ -74,9 +74,9 @@ def uploadphoto(task):
         phototask = (task, abs(quality))
         cur = conn.cursor()
         cur.execute(sql, phototask)
-        createtags(conn, ('notag',))
-        insertphoto(task, 'notag')
         conn.commit()
+        createtags(conn, ('notag',))
+        insertphoto2(task, 'notag')
 
         return cur.lastrowid
     except:
@@ -122,6 +122,30 @@ def createtags(conn, task):
 def insertphoto(photolocation, tags): 
     database = r"photodata.db"    
     conn = create_connection(database)
+    cur = conn.cursor()
+
+    formatphoto= (photolocation)
+    formattag= ([tags])
+
+    photoid = findphoto(conn, formatphoto)
+    tagid = createtags(conn, formattag)
+    outputalldb()
+    deletereference2(photolocation, 'notag')
+    outputalldb()
+
+    try:
+        sql = ''' INSERT INTO reference(photoid, tagid) VALUES(?,?)'''
+        task = (photoid, tagid)
+        cur.execute(sql, task)
+        conn.commit()
+        print('insert', task)
+    except:
+        print("reference insert duplicate")
+
+def insertphoto2(photolocation, tags): 
+    database = r"photodata.db"    
+    conn = create_connection(database)
+    cur = conn.cursor()
 
     formatphoto= (photolocation)
     formattag= ([tags])
@@ -129,16 +153,16 @@ def insertphoto(photolocation, tags):
     photoid = findphoto(conn, formatphoto)
     tagid = createtags(conn, formattag)
 
-    #reference table
     try:
         sql = ''' INSERT INTO reference(photoid, tagid) VALUES(?,?)'''
         task = (photoid, tagid)
-        print(task)
-        cur = conn.cursor()
         cur.execute(sql, task)
         conn.commit()
+        print('insert', task)
     except:
         print("reference insert duplicate")
+
+
 
 
 def outputquery(tags): 
@@ -214,8 +238,9 @@ def deleteimage(photolocation):
     cur.execute(sql1, (photolocation,))
     for row in cur:
         cur.execute(sql2, (row[0],))
+        conn.commit()
         cur.execute(sql3, (row[0],))
-    conn.commit()
+        conn.commit()
 
 def deletetag(tag):
     database = r"photodata.db"
@@ -228,8 +253,9 @@ def deletetag(tag):
     cur.execute(sql1, (tag,))
     for row in cur:
         cur.execute(sql2, (row[0],))
+        conn.commit()
         cur.execute(sql3, (row[0],))
-    conn.commit()
+        conn.commit()
 
 def deletereference(photolocation,tag):
     database = r"photodata.db"
@@ -242,21 +268,43 @@ def deletereference(photolocation,tag):
     cur = conn.cursor()
     cur.execute(sql1, (tag,))
     r1 = cur.fetchone()
-    print(r1[0])
+    print('r1 '+str(r1[0]))
     cur.execute(sql2, (photolocation,))
     r2 = cur.fetchone()
+    print('r2 '+str(r2[0]))
     cur.execute(sql3, (r1[0], r2[0]))
-    cur.execute(sql4, (photolocation,))
+    conn.commit()
+    cur.execute(sql4, (r2[0],))
     exist = cur.fetchone()
-    print(exist)
-    if(exist[0] != 1):
-        insertphoto(photolocation, 'notag')
+    print('exist'+str(exist))
+    if(exist[0] == 0):
+        print('adding notag')
+        insertphoto2(photolocation, 'notag')
+
+def deletereference2(photolocation,tag):
+    database = r"photodata.db"
+    conn = create_connection(database)
+    
+    sql1 = ''' SELECT id FROM tags where tagname = ?'''
+    sql2 = ''' SELECT id FROM photos where filelocation = ?'''
+    sql3 = ''' DELETE FROM reference WHERE tagid = ? AND photoid = ?'''
+    cur = conn.cursor()
+    cur.execute(sql1, (tag,))
+    r1 = cur.fetchone()
+    print('r1 '+str(r1[0]))
+    cur.execute(sql2, (photolocation,))
+    r2 = cur.fetchone()
+    print('r2 '+str(r2[0]))
+    cur.execute(sql3, (r1[0], r2[0]))
     conn.commit()
 
 #testing
 if __name__ == '__main__': #testing
     Createdatabase()
     uploadphoto(r'F:\halcyon\4812.jpg')
+    outputalldb()
     insertphoto(r'F:\halcyon\4812.jpg', 'test')
-    deletereference(r'F:\halcyon\4812.jpg', 'test')
+    outputalldb()
+    deletereference(r'F:\halcyon\4812.jpg', 'notag')
+    outputalldb()
 
