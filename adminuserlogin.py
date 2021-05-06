@@ -58,17 +58,16 @@ def openAdmin():
         scrollbar = Scrollbar(admin, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
         scrollbar.grid(row=2, column=1, sticky='ns')
-        
+
         scrollbar2 = Scrollbar(admin, command=canvas.xview, orient='horizontal')
         canvas.config(xscrollcommand=scrollbar2.set)
         scrollbar2.grid(row=3, column=0, sticky='ew')
-        
+
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
-
 
     def update_scrollregion2(event):
         canvas2.configure(scrollregion=canvas2.bbox("all"))
@@ -76,29 +75,36 @@ def openAdmin():
     def save_Tag():
         """tag input for photo upload to database, etc."""
         tag = tag_var.get()
-        if (tag == ""):
-            return
+        taglist=tag.split(';')
+        taglistL=len(taglist)
+        #access an element in the list taglist[0] and taglist[1]...
+        #print ("taglist[0]: ", taglist[0])
 
-        popup = tk.Toplevel()
-        tk.Label(popup, text="Files being downloaded").grid(row=0, column=0)
+        for x in range(taglistL):
+            tag=taglist[x]
+            if (tag == ""):
+                return
 
-        progress = 0
-        progress_var = tk.DoubleVar()
-        progress_bar = ttk.Progressbar(popup, variable=progress_var, maximum=100)
-        progress_bar.grid(row=1, column=0)  # .pack(fill=tk.X, expand=1, side=tk.BOTTOM)
-        popup.pack_slaves()
+            popup = tk.Toplevel()
+            tk.Label(popup, text="Files being downloaded").grid(row=0, column=0)
 
-        progress_step = float(100.0 / len(photobuttonlist))
-        for i in photobuttonlist:
-            popup.update()
-            progress += progress_step
-            progress_var.set(progress)
-            if i[1].get() != 0:
-                photodatabase.insertphoto(i[0], tag)
-        tag_var.set("")
-        popup.destroy()
-        clear(text_area2)
-        output_tags()
+            progress = 0
+            progress_var = tk.DoubleVar()
+            progress_bar = ttk.Progressbar(popup, variable=progress_var, maximum=100)
+            progress_bar.grid(row=1, column=0)  # .pack(fill=tk.X, expand=1, side=tk.BOTTOM)
+            popup.pack_slaves()
+
+            progress_step = float(100.0 / len(photobuttonlist))
+            for i in photobuttonlist:
+                popup.update()
+                progress += progress_step
+                progress_var.set(progress)
+                if i[1].get() != 0:
+                    photodatabase.insertphoto(i[0], tag)
+            tag_var.set("")
+            popup.destroy()
+            clear(text_area2)
+            output_tags()
 
     def edit_database():
         stack = photodatabase.outputalldb()
@@ -173,8 +179,7 @@ def openAdmin():
         for l in list:
             l.destroy()
 
-
-    #MENU
+    # MENU
 
     uploadMenu = Menu(admin)
     admin.config(menu=uploadMenu)
@@ -186,41 +191,40 @@ def openAdmin():
     file_menu.add_command(label="Edit Database Mode", command=edit_database)
     file_menu.add_command(label="Delete Tag", command=delete_tag)
     file_menu.add_command(label="Delete Photo", command=delete_img)
-    #Creates File in menu
+    # Creates File in menu
     uploadMenu.add_cascade(label="Commands", menu=file_menu)
 
     # Initalize buttons for each tab
 
     # EDIT DATABASE TAB:
-    #btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
-    #btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10, command=output_tags)
-    #btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command=delete_tag)
-    #btn_delphoto = Button(settings, text="Delete Selected Photos", bd=10, font=18, pady=10, command=delete_img)
+    # btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
+    # btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10, command=output_tags)
+    # btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command=delete_tag)
+    # btn_delphoto = Button(settings, text="Delete Selected Photos", bd=10, font=18, pady=10, command=delete_img)
     btn_textentry = Entry(admin, textvariable=tag_var, bd=10, show=None, font=18)
     canvas = Canvas(admin)
     canvas2 = Canvas(admin)
     text_area = Frame(canvas, width=10, height=10)
     text_area2 = Frame(canvas2, width=10, height=10)
 
-
     canvas.grid(row=2, column=0, pady=1, padx=1, sticky='ns', show=None)
     canvas2.grid(row=2, column=2, pady=1, padx=1, sticky='ns', show=None, columnspan=4)
 
     btn_textentry.grid(row=0, column=2, sticky="w", padx=5, pady=5)
-    #btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    #btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
-    #btn_deltag.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
-    #btn_delphoto.grid(row=1, column=0, sticky="ew", padx=5)
+    # btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+    # btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
+    # btn_deltag.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+    # btn_delphoto.grid(row=1, column=0, sticky="ew", padx=5)
 
     # PHOTO UPLOAD TAB:
-    #btn_taglable = Label(admin, text="Enter Tag Below: ", bd=10, font=18, pady=10)
-    #btn_tagentry = Entry(admin, textvariable=tag_var, bd=10, show=None, font=18)
-    #btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
-    #btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
-    #btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
-    #btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
-    #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    #btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+    # btn_taglable = Label(admin, text="Enter Tag Below: ", bd=10, font=18, pady=10)
+    # btn_tagentry = Entry(admin, textvariable=tag_var, bd=10, show=None, font=18)
+    # btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
+    # btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
+    # btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+    # btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
+    # btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+    # btn_save.grid(row=1, column=0, sticky="ew", padx=5)
     edit_database()
     login.wm_state('iconic')
 
@@ -279,7 +283,6 @@ def openUser():
         list = framename.grid_slaves()
         for l in list:
             l.destroy()
-            
 
     # USER BUTTONS
 
@@ -288,16 +291,15 @@ def openUser():
     file_menu = Menu(uploadMenu)
     # Menu item with command
     file_menu.add_command(label="Album Build", command=build)
-    #Creates File in menu
+    # Creates File in menu
     uploadMenu.add_cascade(label="File", menu=file_menu)
-     
 
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
     btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
-    btn_spinbox = Spinbox(user, from_= 1, to = 500)
-    #btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
-    #btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
+    btn_spinbox = Spinbox(user, from_=1, to=500)
+    # btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
+    # btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
     canvas = Canvas(user)
     canvastagout = Canvas(user)
     text_area = Frame(canvas, width=10, height=10)
@@ -309,8 +311,8 @@ def openUser():
     btn_numlable.grid(row=0, column=5, padx=5, pady=5, columnspan=5)
     btn_tagentry.grid(row=1, column=0, padx=5, pady=5, columnspan=5)
     btn_spinbox.grid(row=1, column=5, padx=5, pady=5, columnspan=5)
-    #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    #btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
+    # btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+    # btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
     output_tags()
     login.wm_state('iconic')
 
