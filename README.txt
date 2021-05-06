@@ -1,9 +1,10 @@
 This README will guide the user through the program
 
 STARTUP:
--Before you start the program, run the setup.py file first. This will install the Python packages needed to run the software.
--Once the setup file is run, go ahead and run the adminuserlogin.py
--The program will start up and open a small window
+*Note: Please be aware that a installation of Python must be installed to run this program
+-Before you start the program, run the setup.exe file first. This will install the Python packages needed to run the software.
+-Once the setup file is run, go ahead and run the Start.exe
+-The program will start up and open a small window called Photo Album Creation Tool
 
 ADMIN LOGIN
 Adding Photos to the database:
@@ -25,11 +26,15 @@ Deleting Photos and Tags:
 -To delete photos and tags select "Commands" in the top left corner
 -A drop down will be displayed
 -Select the "Edit Database Mode" option
--This will display all pictures with their repsective tags in the database
--To delete a picture, type the tag the pictured is labeled with into the textbox
--Then go to "Commands", and select "Delete tag"
--This will delete all photos in the database labeled with that tag and it will also delete the tag itself
-*If you want to delete all photos from the database, go to "Commands", and select "Delete Photos" 
+-This will display all pictures with their repsective tags in the database, with all know tags listed to the right
+Delete Photos
+-To delete a picture, select the check box next to them
+-Then go to "Commands," and select "Delete Photo"
+-This will delete selected photos
+Delete Tags
+-To delete tags, type the tag you want to delete in the text box
+-Then go to "Commands," and select "Detete Tag"
+ 
 
 
 USER LOGIN
