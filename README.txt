@@ -27,14 +27,14 @@ Deleting Photos and Tags:
 -To delete photos and tags select "Commands" in the top left corner
 -A drop down will be displayed
 -Select the "Edit Database Mode" option
--This will display all pictures with their repsective tags in the database, with all know tags listed to the right
+-This will display all pictures with their respective tags in the database, with all know tags listed to the right
 Delete Photos
 -To delete a picture, select the check box next to them
 -Then go to "Commands," and select "Delete Photo"
 -This will delete selected photos
 Delete Tags
 -To delete tags, type the tag you want to delete in the text box
--Then go to "Commands," and select "Detete Tag"
+-Then go to "Commands," and select "Delete Tag"
  
 
 
@@ -43,9 +43,10 @@ Creating a Photo Album
 -Select the "User Login" button"
 -A larger window will open
 -Once in this window, type in the desired tag you want the album creator to use in the textbox under "Enter tag below:"
--Then enter the number of photos you want in the photo album by typing in a number below "Enter number of photos bewlow:"
+-Then enter the number of photos you want in the photo album by typing in a number below "Enter number of photos below:"
 -Once these items are entered, select the "File" button in the top left corner
 -A drop down will be displayed
 -Then select "Album Build"
 -This will create a photo album with the best pictures from among the photos with the same tags
+
 
