@@ -3,6 +3,7 @@ This README will guide the user through the program
 STARTUP:
 *Note: Please be aware that a installation of Python must be installed to run this program
 -Before you start the program, run the setup.exe file first. This will install the Python packages needed to run the software.
+*Setup is complete once you see the line "Successfully installed pysqlite3"
 -Once the setup file is run, go ahead and run the Start.exe
 -The program will start up and open a small window called Photo Album Creation Tool
 
