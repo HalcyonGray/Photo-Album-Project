@@ -18,16 +18,18 @@ Adding Photos to the database:
 -Select that folder and press the "Select Folder" button
 -The photos in the folder will then be displayed in the window *(There will be checkboxes next to the photos)
 -Check the boxes next to photos you want to tag
--Then type in your tag in the textbox at the top of the screen
+-Then type in your tag in the textbox at the top of the screen *(To add multiple tags to a photo, put a semicolon between tags. Example: FirstTag;SecondTag)
 -Go back to the drop down box under "Commands" and select "Save With Tag"
 -This will save the photos with the desired tag into the database
 -The tag will be displayed in the database on the right side of the window
+-To see them in the database, go back to the drop down box under "Commands" and select "Edit Database Mode"
+-The database will show the photos with their respective tags in the canvas on the left and all know tags listed on the canvas to the right.
 
 Deleting Photos and Tags:
 -To delete photos and tags select "Commands" in the top left corner
 -A drop down will be displayed
 -Select the "Edit Database Mode" option
--This will display all pictures with their respective tags in the database, with all know tags listed to the right
+-This will display all pictures with their respective tags in the database, with all known tags listed to the right
 Delete Photos
 -To delete a picture, select the check box next to them
 -Then go to "Commands," and select "Delete Photo"
@@ -35,6 +37,7 @@ Delete Photos
 Delete Tags
 -To delete tags, type the tag you want to delete in the text box
 -Then go to "Commands," and select "Delete Tag"
+-This will delete tags you have specified
  
 
 
