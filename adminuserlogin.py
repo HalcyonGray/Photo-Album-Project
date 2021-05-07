@@ -334,7 +334,7 @@ def openUser():
             photolist = photodatabase.buildAlbum(tag)
 
         for i, j in enumerate(photolist):
-            if i < num_var.get() or num_var.get() == 0:
+            if i < num_var.get():
                 imvar = Image.open(j)
                 imvar.thumbnail((400, 400))
                 img = ImageTk.PhotoImage(imvar)
@@ -374,7 +374,7 @@ def openUser():
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
     btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
-    btn_spinbox = Spinbox(user, from_= 1, to = 500)
+    btn_spinbox = Spinbox(user, from_= 1, to = 500, textvariable=num_var)
     #btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
     #btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
     canvas = Canvas(user)
