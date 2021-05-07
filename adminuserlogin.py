@@ -42,6 +42,18 @@ def openAdmin():
                 if file.endswith(".png") | file.endswith(".jpg"):
                     photolist.append(os.path.join(root, file))
         clear(text_area)
+        
+        popup = tk.Toplevel()
+        tk.Label(popup, text="Files being downloaded").grid(row=0, column=0)
+
+        progress = 0
+        progress_var = tk.DoubleVar()
+        progress_bar = ttk.Progressbar(popup, variable=progress_var, maximum=100)
+        progress_bar.grid(row=1, column=0)  # .pack(fill=tk.X, expand=1, side=tk.BOTTOM)
+        popup.pack_slaves()
+
+        progress_step = float(100.0 / len(photolist))
+        
         for i, j in enumerate(photolist):
             var = IntVar()
             c = Checkbutton(text_area, font=18, variable=var)
@@ -53,7 +65,16 @@ def openAdmin():
             c.grid(row=2 + i, column=0)
             panel.grid(row=2 + i, column=1)
             photobuttonlist.append([j.strip(), var, c])
+            
+            popup.update()
+            progress += progress_step
+            progress_var.set(progress)
+            
             photodatabase.uploadphoto(j)
+        
+        tag_var.set("")
+        popup.destroy()
+        
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(admin, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
