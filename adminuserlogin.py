@@ -172,6 +172,7 @@ def openAdmin():
             if i[1].get() != 0:
                 photodatabase.deleteimage(i[0])
         clear(text_area)
+        clear(photobuttonlist)
         edit_database()
 
     def delete_tag():
@@ -186,11 +187,12 @@ def openAdmin():
             if (tag == ""):
                 return
             photodatabase.deletetag(tag)
-            tag_var.set("")
-            clear(text_area)
-            edit_database()
-            clear(text_area2)
-            output_tags()
+        tag_var.set("")
+        clear(text_area)
+        clear(photobuttonlist)
+        edit_database()
+        clear(text_area2)
+        output_tags()
     
     def delete_ref():
         tag = tag_var.get()
@@ -204,8 +206,9 @@ def openAdmin():
             for i in photobuttonlist:
                 if i[1].get() != 0:
                     photodatabase.deletereference(i[0],tag)
-            clear(text_area)
-            edit_database()
+        clear(photobuttonlist)
+        clear(text_area)
+        edit_database()
 
     def add_ref():
         tag = tag_var.get()
@@ -219,8 +222,9 @@ def openAdmin():
             for i in photobuttonlist:
                 if i[1].get() != 0:
                     photodatabase.insertphoto(i[0],tag)
-            clear(text_area)
-            edit_database()
+        clear(photobuttonlist)
+        clear(text_area)
+        edit_database()
 
 
     def output_tags():
