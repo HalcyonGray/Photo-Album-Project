@@ -102,8 +102,6 @@ def openAdmin():
 
         taglist=tag.split(';')
         taglistL=len(taglist)
-        #access an element in the list taglist[0] and taglist[1]...
-        #print ("taglist[0]: ", taglist[0])
 
         for x in range(taglistL):
             tag=taglist[x]
@@ -184,8 +182,6 @@ def openAdmin():
         tag = tag_var.get()
         taglist=tag.split(';')
         taglistL=len(taglist)
-        #access an element in the list taglist[0] and taglist[1]...
-        #print ("taglist[0]: ", taglist[0])
 
         for x in range(taglistL):
             tag=taglist[x]
@@ -203,8 +199,6 @@ def openAdmin():
         tag = tag_var.get()
         taglist=tag.split(';')
         taglistL=len(taglist)
-        #access an element in the list taglist[0] and taglist[1]...
-        #print ("taglist[0]: ", taglist[0])
 
         for x in range(taglistL):
             tag=taglist[x]
@@ -219,8 +213,6 @@ def openAdmin():
         tag = tag_var.get()
         taglist=tag.split(';')
         taglistL=len(taglist)
-        #access an element in the list taglist[0] and taglist[1]...
-        #print ("taglist[0]: ", taglist[0])
 
         for x in range(taglistL):
             tag=taglist[x]
@@ -271,10 +263,6 @@ def openAdmin():
     # Initalize buttons for each tab
 
     # EDIT DATABASE TAB:
-    #btn_datashow = Button(settings, text="Show database", bd=10, font=18, pady=10, command=edit_database)
-    #btn_tagshow = Button(settings, text="Show all tags", bd=10, font=18, pady=10, command=output_tags)
-    #btn_deltag = Button(settings, text="Delete Tag", bd=10, font=18, pady=10, command=delete_tag)
-    #btn_delphoto = Button(settings, text="Delete Selected Photos", bd=10, font=18, pady=10, command=delete_img)
     btn_textentry = Entry(admin, textvariable=tag_var, bd=10, show=None, font=18)
     canvas = Canvas(admin)
     canvas2 = Canvas(admin)
@@ -288,20 +276,7 @@ def openAdmin():
     textlabel = Label(admin, text = "Enter Tag:", bd=10, font=18, pady=10)
     textlabel.grid(row=0, column=0, sticky="e", padx=5, pady=5, columnspan=2)
     btn_textentry.grid(row=0, column=2, sticky="w", padx=5, pady=5)
-    #btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    #btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
-    #btn_deltag.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
-    #btn_delphoto.grid(row=1, column=0, sticky="ew", padx=5)
 
-    # PHOTO UPLOAD TAB:
-    #btn_taglable = Label(admin, text="Enter Tag Below: ", bd=10, font=18, pady=10)
-    #btn_tagentry = Entry(admin, textvariable=tag_var, bd=10, show=None, font=18)
-    #btn_open = Button(photoUpload, text="Choose Photos", bd=10, font=18, pady=10, command=open_dir)
-    #btn_save = Button(photoUpload, text="Save Tag...", bd=10, font=18, pady=10, command=save_Tag)
-    #btn_taglable.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
-    #btn_tagentry.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
-    #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    #btn_save.grid(row=1, column=0, sticky="ew", padx=5)
     edit_database()
     login.wm_state('iconic')
 
@@ -334,20 +309,35 @@ def openUser():
         clear(text_area)
         tag = tag_var.get()
         taglist=tag.split(';')
-        taglistL=len(taglist)
         refstack = photodatabase.buildAlbum(taglist.pop())#gets first tag build
-        taglistL = taglistL-1
-        for x in range(taglistL):
-            tag=taglist[x]
+        reftemp = refstack.copy()
+        print('build start')
+        print('tag: ', tag)
+        print(refstack)
+        for tag in taglist:
             photolist = photodatabase.buildAlbum(tag)
-            for count, refphoto in enumerate(refstack):
+            print('photolist')
+            print(tag)
+            print(photolist)
+            for refphoto in reftemp:
                 n=False
+                print('refphoto')
+                print(refphoto)
                 for compphoto in photolist:
                     if refphoto == compphoto:
                         n=True
+                        print('same photo')
+                        print(refphoto)
+                        print(compphoto)
                 if n == False:
-                    print(taglist[x])
-                    print(refstack.pop(count))
+                    print('remove')
+                    print(refphoto)
+                    refstack.remove(refphoto)
+                    print(refstack)
+                else:
+                    print('did not remove')
+                    print(refphoto)
+
 
         for i, j in enumerate(refstack):
             if i < num_var.get():
@@ -396,8 +386,6 @@ def openUser():
     btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
     btn_spinbox = Spinbox(user, from_= 1, to = 500, textvariable=num_var)
-    #btn_open = Button(user, text="List tags", bd=10, font=18, pady=10, command=output_tags)
-    #btn_quality = Button(user, text="Build Album", bd=10, font=18, pady=10, command=build)
     canvas = Canvas(user)
     canvastagout = Canvas(user)
     text_area = Frame(canvas, width=10, height=10)
