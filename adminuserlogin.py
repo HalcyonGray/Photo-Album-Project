@@ -101,10 +101,7 @@ def openAdmin():
             return
 
         taglist=tag.split(';')
-        taglistL=len(taglist)
-
-        for x in range(taglistL):
-            tag=taglist[x]
+        for tag in taglist:
             if (tag == ""):
                 return
 
@@ -181,10 +178,7 @@ def openAdmin():
     def delete_tag():
         tag = tag_var.get()
         taglist=tag.split(';')
-        taglistL=len(taglist)
-
-        for x in range(taglistL):
-            tag=taglist[x]
+        for tag in taglist:
             if (tag == ""):
                 return
             photodatabase.deletetag(tag)
@@ -198,30 +192,26 @@ def openAdmin():
     def delete_ref():
         tag = tag_var.get()
         taglist=tag.split(';')
-        taglistL=len(taglist)
-
-        for x in range(taglistL):
-            tag=taglist[x]
+        for tag in taglist:
             for i in photobuttonlist:
                 if i[1].get() != 0:
                     photodatabase.deletereference(i[0],tag)
         photobuttonlist.clear()
         clear(text_area)
         edit_database()
+        tag_var.set("")
 
     def add_ref():
         tag = tag_var.get()
         taglist=tag.split(';')
-        taglistL=len(taglist)
-
-        for x in range(taglistL):
-            tag=taglist[x]
+        for tag in taglist:
             for i in photobuttonlist:
                 if i[1].get() != 0:
                     photodatabase.insertphoto(i[0],tag)
         photobuttonlist.clear()
         clear(text_area)
         edit_database()
+        tag_var.set("")
 
 
     def output_tags():
@@ -337,6 +327,7 @@ def openUser():
                 else:
                     print('did not remove')
                     print(refphoto)
+        tag_var.set("")
 
 
         for i, j in enumerate(refstack):
