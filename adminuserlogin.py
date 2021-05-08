@@ -335,14 +335,21 @@ def openUser():
         tag = tag_var.get()
         taglist=tag.split(';')
         taglistL=len(taglist)
-        #access an element in the list taglist[0] and taglist[1]...
-        #print ("taglist[0]: ", taglist[0])
-
+        refstack = photodatabase.buildAlbum(taglist.pop())#gets first tag build
+        taglistL = taglistL-1
         for x in range(taglistL):
             tag=taglist[x]
             photolist = photodatabase.buildAlbum(tag)
+            for count, refphoto in enumerate(refstack):
+                n=False
+                for compphoto in photolist:
+                    if refphoto == compphoto:
+                        n=True
+                if n == False:
+                    print(taglist[x])
+                    print(refstack.pop(count))
 
-        for i, j in enumerate(photolist):
+        for i, j in enumerate(refstack):
             if i < num_var.get():
                 imvar = Image.open(j)
                 imvar.thumbnail((400, 400))
