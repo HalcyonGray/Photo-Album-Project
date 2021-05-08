@@ -325,7 +325,7 @@ def openUser():
         canvastagout.create_window(0, 0, anchor='nw', window=text_area2)
         scrollbartag = Scrollbar(user, command=canvas.yview)
         canvastagout.config(yscrollcommand=scrollbartag.set)
-        scrollbartag.grid(row=3, column=12, sticky='ns')
+        scrollbartag.grid(row=3, column=7, sticky='ns')
         text_area2.bind("<Configure>", update_scrollregion2)
         canvastagout.update_idletasks()
 
@@ -353,7 +353,12 @@ def openUser():
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(user, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
-        scrollbar.grid(row=3, column=3, sticky='ns')
+        scrollbar.grid(row=3, column=1, sticky='ns')
+        
+        scrollbar2 = Scrollbar(user, command=canvas.xview, orient=HORIZONTAL)
+        canvas.config(xscrollcommand=scrollbar2.set)
+        scrollbar2.grid(row=4, column=0, sticky='ew')
+        
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
@@ -390,13 +395,13 @@ def openUser():
     canvastagout = Canvas(user)
     text_area = Frame(canvas, width=10, height=10)
     text_area2 = Frame(canvastagout, width=10, height=10)
-    canvas.grid(row=3, column=0, pady=1, padx=1, sticky='ns', columnspan=2)
-    canvastagout.grid(row=3, column=5, pady=1, padx=1, sticky='ns', columnspan=5)
+    canvas.grid(row=3, column=0, pady=1, padx=1, sticky='ns')
+    canvastagout.grid(row=3, column=2, pady=1, padx=1, sticky='ns', columnspan=4)
 
-    btn_taglable.grid(row=0, column=0, padx=5, pady=5, columnspan=5)
-    btn_numlable.grid(row=0, column=5, padx=5, pady=5, columnspan=5)
-    btn_tagentry.grid(row=1, column=0, padx=5, pady=5, columnspan=5)
-    btn_spinbox.grid(row=1, column=5, padx=5, pady=5, columnspan=5)
+    btn_taglable.grid(row=0, column=0, padx=5, pady=5, columnspan=2)
+    btn_numlable.grid(row=0, column=2, padx=5, pady=5, columnspan=5)
+    btn_tagentry.grid(row=1, column=0, padx=5, pady=5, columnspan=2)
+    btn_spinbox.grid(row=1, column=2, padx=5, pady=5, columnspan=5)
     #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     #btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
     output_tags()
