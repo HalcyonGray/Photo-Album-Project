@@ -286,7 +286,7 @@ def openAdmin():
     canvas2.grid(row=2, column=2, pady=1, padx=1, sticky='ns', show=None, columnspan=4)
     
     textlabel = Label(admin, text = "Enter Tag:", bd=10, font=18, pady=10)
-    textlabel.grid(row=0, column=0, sticky="e", columnspan=2)
+    textlabel.grid(row=0, column=0, sticky="e", padx=5, pady=5 columnspan=2)
     btn_textentry.grid(row=0, column=2, sticky="w", padx=5, pady=5)
     #btn_datashow.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
     #btn_tagshow.grid(row=1, column=1, sticky="ew", padx=5, pady=5)
