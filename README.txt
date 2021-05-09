@@ -5,43 +5,70 @@ STARTUP:
 -Before you start the program, run the setup.exe file first. This will install the Python packages needed to run the software.
 *Setup is complete once you see the line "Successfully installed pysqlite3"
 -Once the setup file is run, go ahead and run the Start.exe
--The program will start up and open a small window called Photo Album Creation Tool
+-The program will start up the program and open a small window called Photo Album Creation Tool
 
-ADMIN LOGIN
-Adding Photos to the database:
+ADMIN LOGIN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding Photos database:
 -Select the "Admin Login" button
 -A larger window will open *(If you have not uploaded pictures before this window will be empty)
 -Once in this window, select the "Commands" button in the top left corner
 -A drop down will be displayed
 -Select the "Photo Upload Mode" option and a file explorer window will appear
 -Navigate to the folder which contains the photos you want to upload
--Select that folder and press the "Select Folder" button
+-Select that folder and press the "Select Folder" button *(This will take some time, depending on how many photos are in the folder)
 -The photos in the folder will then be displayed in the window *(There will be checkboxes next to the photos)
+
+Adding Tags to Photos:
+-Once you have added photos to the database
 -Check the boxes next to photos you want to tag
 -Then type in your tag in the textbox at the top of the screen *(To add multiple tags to a photo, put a semicolon between tags. Example: FirstTag;SecondTag)
 -Go back to the drop down box under "Commands" and select "Save With Tag"
--This will save the photos with the desired tag into the database
--The tag will be displayed in the database on the right side of the window
--To see them in the database, go back to the drop down box under "Commands" and select "Edit Database Mode"
--The database will show the photos with their respective tags in the canvas on the left and all know tags listed on the canvas to the right.
+-This will save the photos with the desired tag(s) into the database
+-The tag(s) will then be displayed in the database on the right side of the window
+-To see the photos in the database, go back to the drop down box under "Commands" and select "Edit Database Mode"
+-The database will show the photos with their respective tags in the canvas on the left and all known tags listed on the canvas to the right
 
-Deleting Photos and Tags:
--To delete photos and tags select "Commands" in the top left corner
+-If you are in "Edit Database Mode" and still wish to add more tags to photos, check mark the photos you wish to add tags to
+-Then type the tag(s) you wish to add to the photos in the text box, labeled "Enter tag:" at the top of the window *(To add multiple tags to a photo, put a semicolon between tags. Example: FirstTag;SecondTag)
+-Go back to the drop down box under "Commands" and select "Add Tag to Photo"
+-This will add the desired tag(s) to the photo(s)
+
+Filtering Photos By Tags:
+-If you want to find photos with a specific tag, type the desired tag into the text box labeled "Enter Tag:"
+-Go back to the drop down box under "Commands" and select "Filter by Tags"
+-This will find all photos with the desired tag and display them in the database
+-To continue viewing all photos, go back to the drop down box under "Commands" and select "Edit Database Mode"
+
+Deleting Photos from the Database:
+-To delete photos from the database, select "Commands" in the top left corner
 -A drop down will be displayed
 -Select the "Edit Database Mode" option
 -This will display all pictures with their respective tags in the database, with all known tags listed to the right
-Delete Photos
--To delete a picture, select the check box next to them
+-To delete a picture, check mark the box next to them
 -Then go to "Commands," and select "Delete Photo"
--This will delete selected photos
-Delete Tags
--To delete tags, type the tag you want to delete in the text box
+-This will delete selected photos in the database
+
+Deleting Tags from Photos:
+(Note: This will remove the tag from the photo. The tag will still exist in the database)
+-To delete tag(s) from the database select "Commands" in the top left corner
+-A drop down will be displayed
+-Select the "Edit Database Mode" option
+-This will display all pictures with their respective tags in the database, with all known tags listed to the right
+-To delete tag(s) from photo(s), enter the tag you want to delete in the text box labeled "Enter Tag:"
+-Select the photos you want the tag removed from
+-Go to the drop down box under "Commands" and select "Delete Tag from Photo"
+-This will remove the tag(s) from the photo(s)
+
+Deleting Tags from the Database:
+-To delete tag(s) from the database select "Commands" in the top left corner
+-A drop down will be displayed
+-Select the "Edit Database Mode" option
+-This will display all pictures with their respective tags in the database, with all known tags listed to the right
+-To delete tags database, type the tag(s) you want to delete in the text box labeled "Enter Tag:"
 -Then go to "Commands," and select "Delete Tag"
--This will delete tags you have specified
- 
+-This will delete tags database and remove them from the photos they are attached to
 
-
-USER LOGIN
+USER LOGIN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Creating a Photo Album
 -Select the "User Login" button"
 -A larger window will open
