@@ -67,10 +67,8 @@ def uploadphoto(task):
         conn = create_connection(database)
         
         sql = ''' INSERT INTO photos(filelocation, quality) VALUES(?,?)'''
-        print(task)
         img = Image.open(task)
         quality = brisque.score(img)
-        print(quality)
         phototask = (task, abs(quality))
         cur = conn.cursor()
         cur.execute(sql, phototask)
@@ -138,11 +136,10 @@ def insertphoto(photolocation, tags):
         task = (photoid, tagid)
         cur.execute(sql, task)
         conn.commit()
-        print('insert', task)
     except:
         print("reference insert duplicate")
 
-def insertphoto2(photolocation, tags): 
+def insertphoto2(photolocation, tags): #to prevent loop
     database = r"photodata.db"    
     conn = create_connection(database)
     cur = conn.cursor()
@@ -158,7 +155,6 @@ def insertphoto2(photolocation, tags):
         task = (photoid, tagid)
         cur.execute(sql, task)
         conn.commit()
-        print('insert', task)
     except:
         print("reference insert duplicate")
 
@@ -177,7 +173,6 @@ def outputquery(tags):
     conn.commit()
 
     for row in cur:
-        #print(row[0])
         returrnstack.append(row[0])
     return returrnstack
 
@@ -192,7 +187,6 @@ def outputalltags():
     conn.commit()
 
     for row in cur:
-        #print(row[0])
         returrnstack.append(row[0])
     return returrnstack
 
@@ -207,7 +201,20 @@ def outputalldb():
     conn.commit()
 
     for row in cur:
-        print(row[0], "     ", row[1])
+        returrnstack.append((row[0], row[1]))
+    return returrnstack
+
+def outputalloftag(tag): 
+    database = r"photodata.db"
+    conn = create_connection(database)
+
+    sql = ''' SELECT filelocation, tags.tagname FROM photos INNER JOIN reference ON photos.id = reference.photoid INNER JOIN tags ON reference.tagid = tags.id WHERE tagname=? ORDER BY filelocation ASC'''
+    returrnstack = []
+    cur = conn.cursor()
+    cur.execute(sql, (tag,))
+    conn.commit()
+
+    for row in cur:
         returrnstack.append((row[0], row[1]))
     return returrnstack
 
@@ -222,7 +229,6 @@ def buildAlbum(tags):
     conn.commit()
 
     for row in cur:
-        print(row[0])
         returrnstack.append(row[0])
     return returrnstack
 
@@ -268,20 +274,16 @@ def deletereference(photolocation,tag):
     cur = conn.cursor()
     cur.execute(sql1, (tag,))
     r1 = cur.fetchone()
-    print('r1 '+str(r1[0]))
     cur.execute(sql2, (photolocation,))
     r2 = cur.fetchone()
-    print('r2 '+str(r2[0]))
     cur.execute(sql3, (r1[0], r2[0]))
     conn.commit()
     cur.execute(sql4, (r2[0],))
     exist = cur.fetchone()
-    print('exist'+str(exist))
     if(exist[0] == 0):
-        print('adding notag')
         insertphoto2(photolocation, 'notag')
 
-def deletereference2(photolocation,tag):
+def deletereference2(photolocation,tag): #to prevent loop
     database = r"photodata.db"
     conn = create_connection(database)
     
@@ -291,10 +293,8 @@ def deletereference2(photolocation,tag):
     cur = conn.cursor()
     cur.execute(sql1, (tag,))
     r1 = cur.fetchone()
-    print('r1 '+str(r1[0]))
     cur.execute(sql2, (photolocation,))
     r2 = cur.fetchone()
-    print('r2 '+str(r2[0]))
     cur.execute(sql3, (r1[0], r2[0]))
     conn.commit()
 
