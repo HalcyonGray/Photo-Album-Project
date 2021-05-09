@@ -120,7 +120,6 @@ def openAdmin():
                 progress += progress_step
                 progress_var.set(progress)
                 if i[1].get() != 0:
-                    print(i[0])
                     photodatabase.insertphoto(i[0], tag)
             tag_var.set("")
             popup.destroy()
@@ -144,7 +143,6 @@ def openAdmin():
                 panel2 = Label(text_area, image=img)
                 panel2.image = img
                 panel3 = Label(text_area, text=j[1], font=18)
-                # panel2 = Label(text_area, text = j[1], font = 18)
                 c.grid(row=2 + i, column=0)
                 panel2.grid(row=2 + i, column=1)
                 panel3.grid(row=2 + i, column=2)
@@ -153,6 +151,60 @@ def openAdmin():
                 columntemp = 3
             else:
                 panel4 = Label(text_area, text=j[1], font=18)
+                panel4.grid(row=rowtemp, column=columntemp)
+                columntemp = columntemp + 1
+        canvas.create_window(0, 0, anchor='nw', window=text_area)
+        scrollbar = Scrollbar(admin, command=canvas.yview)
+        canvas.config(yscrollcommand=scrollbar.set)
+        scrollbar.grid(row=2, column=1, sticky='ns')
+        
+        scrollbar2 = Scrollbar(admin, command=canvas.xview, orient=HORIZONTAL)
+        canvas.config(xscrollcommand=scrollbar2.set)
+        scrollbar2.grid(row=3, column=0, sticky='ew')
+        
+        text_area.bind("<Configure>", update_scrollregion)
+        canvas.update_idletasks()
+
+    def all_of_tag_database():
+        tag = tag_var.get()
+        if (tag == ""):
+                return
+        taglist=tag.split(';')
+        taglistcopy = taglist.copy()
+        stack = photodatabase.outputalloftag(taglist.pop())
+        reftemp = stack.copy()
+        for tag in taglist:
+            compstack = photodatabase.outputalloftag(tag)
+            for refphoto in reftemp:
+                n=False
+                for compphoto in compstack:
+                    if refphoto[0] == compphoto[0]:
+                        n=True
+                if n == False:
+                    stack.remove(refphoto)
+        clear(text_area2)
+        tag_var.set("")
+        output_tags()
+        refpic = r""
+        clear(text_area)
+        for i, j in enumerate(stack):
+            refpic = j[0]
+            var = IntVar()
+            c = Checkbutton(text_area, font=18, variable=var)
+            imvar = Image.open(refpic)
+            imvar.thumbnail((100, 100))
+            img = ImageTk.PhotoImage(imvar)
+            panel2 = Label(text_area, image=img)
+            panel2.image = img
+            #panel3 = Label(text_area, text=j[1], font=18)
+            c.grid(row=2 + i, column=0)
+            panel2.grid(row=2 + i, column=1)
+            #panel3.grid(row=2 + i, column=2)
+            photobuttonlist.append([refpic, var, c])
+            rowtemp = 2 + i
+            columntemp = 2
+            for tags in taglistcopy:
+                panel4 = Label(text_area, text=tags, font=18)
                 panel4.grid(row=rowtemp, column=columntemp)
                 columntemp = columntemp + 1
         canvas.create_window(0, 0, anchor='nw', window=text_area)
@@ -217,7 +269,6 @@ def openAdmin():
     def output_tags():
         taglist = photodatabase.outputalltags()
         for i, j in enumerate(taglist):
-            print(j)
             panel = Label(text_area2, text=j)
             panel.grid(row=2 + i)
         canvas2.create_window(0, 0, anchor='nw', window=text_area2)
@@ -243,6 +294,7 @@ def openAdmin():
     file_menu.add_command(label="Save With Tag", command=save_Tag)
     file_menu.add_separator()
     file_menu.add_command(label="Edit Database Mode", command=edit_database)
+    file_menu.add_command(label="Filter by tags", command=all_of_tag_database)
     file_menu.add_command(label="Delete Tag", command=delete_tag)
     file_menu.add_command(label="Delete Photo", command=delete_img)
     file_menu.add_command(label="Delete Tag from Photo", command=delete_ref)
@@ -301,32 +353,15 @@ def openUser():
         taglist=tag.split(';')
         refstack = photodatabase.buildAlbum(taglist.pop())#gets first tag build
         reftemp = refstack.copy()
-        print('build start')
-        print('tag: ', tag)
-        print(refstack)
         for tag in taglist:
             photolist = photodatabase.buildAlbum(tag)
-            print('photolist')
-            print(tag)
-            print(photolist)
             for refphoto in reftemp:
                 n=False
-                print('refphoto')
-                print(refphoto)
                 for compphoto in photolist:
                     if refphoto == compphoto:
                         n=True
-                        print('same photo')
-                        print(refphoto)
-                        print(compphoto)
                 if n == False:
-                    print('remove')
-                    print(refphoto)
                     refstack.remove(refphoto)
-                    print(refstack)
-                else:
-                    print('did not remove')
-                    print(refphoto)
         tag_var.set("")
 
 
