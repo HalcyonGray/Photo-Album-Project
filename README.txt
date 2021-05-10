@@ -8,6 +8,10 @@ STARTUP:
 -The program will start up the program and open a small window called Photo Album Creation Tool
 
 ADMIN LOGIN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*Please note that you can enter multiple tags in at once when typing tags into the "Enter Tag:" text box.
+*To do this, you must put a semicolon between tags. For example "Enter Tag: FirstTag;SecondTag"
+
 Adding Photos database:
 -Select the "Admin Login" button
 -A larger window will open *(If you have not uploaded pictures before this window will be empty)
@@ -21,7 +25,7 @@ Adding Photos database:
 Adding Tags to Photos:
 -Once you have added photos to the database
 -Check the boxes next to photos you want to tag
--Then type in your tag in the textbox at the top of the screen *(To add multiple tags to a photo, put a semicolon between tags. Example: FirstTag;SecondTag)
+-Then type in your tag in the textbox at the top of the screen
 -Go back to the drop down box under "Commands" and select "Save With Tag"
 -This will save the photos with the desired tag(s) into the database
 -The tag(s) will then be displayed in the database on the right side of the window
@@ -29,12 +33,12 @@ Adding Tags to Photos:
 -The database will show the photos with their respective tags in the canvas on the left and all known tags listed on the canvas to the right
 
 -If you are in "Edit Database Mode" and still wish to add more tags to photos, check mark the photos you wish to add tags to
--Then type the tag(s) you wish to add to the photos in the text box, labeled "Enter tag:" at the top of the window *(To add multiple tags to a photo, put a semicolon between tags. Example: FirstTag;SecondTag)
+-Then type the tag(s) you wish to add to the photos in the text box, labeled "Enter tag:" at the top of the window
 -Go back to the drop down box under "Commands" and select "Add Tag to Photo"
 -This will add the desired tag(s) to the photo(s)
 
 Filtering Photos By Tags:
--If you want to find photos with a specific tag, type the desired tag into the text box labeled "Enter Tag:"
+-If you want to find photos with a specific tag, type the desired tag(s) into the text box labeled "Enter Tag:"
 -Go back to the drop down box under "Commands" and select "Filter by Tags"
 -This will find all photos with the desired tag and display them in the database
 -To continue viewing all photos, go back to the drop down box under "Commands" and select "Edit Database Mode"
