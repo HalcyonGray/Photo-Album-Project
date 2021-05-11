@@ -124,6 +124,7 @@ def openAdmin():
             tag_var.set("")
             popup.destroy()
         clear(text_area2)
+        photobuttonlist.clear()
         output_tags()
 
     def edit_database():
