@@ -365,6 +365,9 @@ def openUser():
                     refstack.remove(refphoto)
         tag_var.set("")
 
+        if not refstack:
+            panel = Label(text_area, text="No photos with tag Error")
+            panel.grid(row=3 + 1)
 
         for i, j in enumerate(refstack):
             if i < num_var.get():
