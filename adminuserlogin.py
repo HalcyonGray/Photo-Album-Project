@@ -53,7 +53,10 @@ def openAdmin():
         popup.pack_slaves()
 
         progress_step = float(100.0 / len(photolist))
-        
+        if not photolist:
+            panel = Label(text_area, text="No photos in directory")
+            panel.grid(row=3 + 1)
+            
         for i, j in enumerate(photolist):
             var = IntVar()
             c = Checkbutton(text_area, font=18, variable=var)
@@ -188,6 +191,10 @@ def openAdmin():
         output_tags()
         refpic = r""
         clear(text_area)
+        if not stack:
+            panel = Label(text_area, text="No photos with tag Error")
+            panel.grid(row=3 + 1)
+            
         for i, j in enumerate(stack):
             refpic = j[0]
             var = IntVar()
