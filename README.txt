@@ -1,8 +1,7 @@
 This README will guide the user through the program
 
-Download a pyhton instalation from their website
-https://www.python.org/downloads/
-or from https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe
+Download a python installation from their website
+https://www.python.org/downloads/ or from https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe
 
 STARTUP:
 *Note: Please be aware that a installation of Python must be installed to run this program
