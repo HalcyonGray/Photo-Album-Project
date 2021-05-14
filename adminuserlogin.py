@@ -42,7 +42,7 @@ def openAdmin():
                 if file.endswith(".png") | file.endswith(".jpg"):
                     photolist.append(os.path.join(root, file))
         clear(text_area)
-        
+
         popup = tk.Toplevel()
         tk.Label(popup, text="Files being downloaded").grid(row=0, column=0)
 
@@ -56,7 +56,7 @@ def openAdmin():
         if not photolist:
             panel = Label(text_area, text="No photos in directory")
             panel.grid(row=3 + 1)
-            
+
         for i, j in enumerate(photolist):
             var = IntVar()
             c = Checkbutton(text_area, font=18, variable=var)
@@ -68,31 +68,30 @@ def openAdmin():
             c.grid(row=2 + i, column=0)
             panel.grid(row=2 + i, column=1)
             photobuttonlist.append([j.strip(), var, c])
-            
+
             popup.update()
             progress += progress_step
             progress_var.set(progress)
-            
+
             photodatabase.uploadphoto(j)
-        
+
         tag_var.set("")
         popup.destroy()
-        
+
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(admin, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
         scrollbar.grid(row=2, column=1, sticky='ns')
-        
+
         scrollbar2 = Scrollbar(admin, command=canvas.xview, orient='horizontal')
         canvas.config(xscrollcommand=scrollbar2.set)
         scrollbar2.grid(row=3, column=0, sticky='ew')
-        
+
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
-
 
     def update_scrollregion2(event):
         canvas2.configure(scrollregion=canvas2.bbox("all"))
@@ -103,7 +102,7 @@ def openAdmin():
         if (tag == ""):
             return
 
-        taglist=tag.split(';')
+        taglist = tag.split(';')
         for tag in taglist:
             if (tag == ""):
                 return
@@ -161,29 +160,29 @@ def openAdmin():
         scrollbar = Scrollbar(admin, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
         scrollbar.grid(row=2, column=1, sticky='ns')
-        
+
         scrollbar2 = Scrollbar(admin, command=canvas.xview, orient=HORIZONTAL)
         canvas.config(xscrollcommand=scrollbar2.set)
         scrollbar2.grid(row=3, column=0, sticky='ew')
-        
+
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
     def all_of_tag_database():
         tag = tag_var.get()
         if (tag == ""):
-                return
-        taglist=tag.split(';')
+            return
+        taglist = tag.split(';')
         taglistcopy = taglist.copy()
         stack = photodatabase.outputalloftag(taglist.pop())
         reftemp = stack.copy()
         for tag in taglist:
             compstack = photodatabase.outputalloftag(tag)
             for refphoto in reftemp:
-                n=False
+                n = False
                 for compphoto in compstack:
                     if refphoto[0] == compphoto[0]:
-                        n=True
+                        n = True
                 if n == False:
                     stack.remove(refphoto)
         clear(text_area2)
@@ -194,7 +193,7 @@ def openAdmin():
         if not stack:
             panel = Label(text_area, text="No photos with tag Error")
             panel.grid(row=3 + 1)
-            
+
         for i, j in enumerate(stack):
             refpic = j[0]
             var = IntVar()
@@ -204,10 +203,10 @@ def openAdmin():
             img = ImageTk.PhotoImage(imvar)
             panel2 = Label(text_area, image=img)
             panel2.image = img
-            #panel3 = Label(text_area, text=j[1], font=18)
+            # panel3 = Label(text_area, text=j[1], font=18)
             c.grid(row=2 + i, column=0)
             panel2.grid(row=2 + i, column=1)
-            #panel3.grid(row=2 + i, column=2)
+            # panel3.grid(row=2 + i, column=2)
             photobuttonlist.append([refpic, var, c])
             rowtemp = 2 + i
             columntemp = 2
@@ -219,11 +218,11 @@ def openAdmin():
         scrollbar = Scrollbar(admin, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
         scrollbar.grid(row=2, column=1, sticky='ns')
-        
+
         scrollbar2 = Scrollbar(admin, command=canvas.xview, orient=HORIZONTAL)
         canvas.config(xscrollcommand=scrollbar2.set)
         scrollbar2.grid(row=3, column=0, sticky='ew')
-        
+
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
@@ -237,7 +236,7 @@ def openAdmin():
 
     def delete_tag():
         tag = tag_var.get()
-        taglist=tag.split(';')
+        taglist = tag.split(';')
         for tag in taglist:
             if (tag == ""):
                 return
@@ -248,14 +247,14 @@ def openAdmin():
         edit_database()
         clear(text_area2)
         output_tags()
-    
+
     def delete_ref():
         tag = tag_var.get()
-        taglist=tag.split(';')
+        taglist = tag.split(';')
         for tag in taglist:
             for i in photobuttonlist:
                 if i[1].get() != 0:
-                    photodatabase.deletereference(i[0],tag)
+                    photodatabase.deletereference(i[0], tag)
         photobuttonlist.clear()
         clear(text_area)
         edit_database()
@@ -263,16 +262,15 @@ def openAdmin():
 
     def add_ref():
         tag = tag_var.get()
-        taglist=tag.split(';')
+        taglist = tag.split(';')
         for tag in taglist:
             for i in photobuttonlist:
                 if i[1].get() != 0:
-                    photodatabase.insertphoto(i[0],tag)
+                    photodatabase.insertphoto(i[0], tag)
         photobuttonlist.clear()
         clear(text_area)
         edit_database()
         tag_var.set("")
-
 
     def output_tags():
         taglist = photodatabase.outputalltags()
@@ -291,8 +289,7 @@ def openAdmin():
         for l in list:
             l.destroy()
 
-
-    #MENU
+    # MENU
 
     uploadMenu = Menu(admin)
     admin.config(menu=uploadMenu)
@@ -307,7 +304,7 @@ def openAdmin():
     file_menu.add_command(label="Delete Photo", command=delete_img)
     file_menu.add_command(label="Delete Tag from Photo", command=delete_ref)
     file_menu.add_command(label="Add Tag to Photo", command=add_ref)
-    #Creates File in menu
+    # Creates File in menu
     uploadMenu.add_cascade(label="Commands", menu=file_menu)
 
     # Initalize buttons for each tab
@@ -319,11 +316,10 @@ def openAdmin():
     text_area = Frame(canvas, width=10, height=10)
     text_area2 = Frame(canvas2, width=10, height=10)
 
-
     canvas.grid(row=2, column=0, pady=1, padx=1, sticky='ns', show=None)
     canvas2.grid(row=2, column=2, pady=1, padx=1, sticky='ns', show=None, columnspan=4)
-    
-    textlabel = Label(admin, text = "Enter Tag:", bd=10, font=18, pady=10)
+
+    textlabel = Label(admin, text="Enter Tag:", bd=10, font=18, pady=10)
     textlabel.grid(row=0, column=0, sticky="e", padx=5, pady=5, columnspan=2)
     btn_textentry.grid(row=0, column=2, sticky="w", padx=5, pady=5)
 
@@ -358,16 +354,16 @@ def openUser():
         """Build photo Album"""
         clear(text_area)
         tag = tag_var.get()
-        taglist=tag.split(';')
-        refstack = photodatabase.buildAlbum(taglist.pop())#gets first tag build
+        taglist = tag.split(';')
+        refstack = photodatabase.buildAlbum(taglist.pop())  # gets first tag build
         reftemp = refstack.copy()
         for tag in taglist:
             photolist = photodatabase.buildAlbum(tag)
             for refphoto in reftemp:
-                n=False
+                n = False
                 for compphoto in photolist:
                     if refphoto == compphoto:
-                        n=True
+                        n = True
                 if n == False:
                     refstack.remove(refphoto)
         tag_var.set("")
@@ -388,11 +384,11 @@ def openUser():
         scrollbar = Scrollbar(user, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
         scrollbar.grid(row=3, column=1, sticky='ns')
-        
+
         scrollbar2 = Scrollbar(user, command=canvas.xview, orient=HORIZONTAL)
         canvas.config(xscrollcommand=scrollbar2.set)
         scrollbar2.grid(row=4, column=0, sticky='ew')
-        
+
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
 
@@ -406,7 +402,6 @@ def openUser():
         list = framename.grid_slaves()
         for l in list:
             l.destroy()
-            
 
     # USER BUTTONS
 
@@ -415,14 +410,13 @@ def openUser():
     file_menu = Menu(uploadMenu)
     # Menu item with command
     file_menu.add_command(label="Album Build", command=build)
-    #Creates File in menu
+    # Creates File in menu
     uploadMenu.add_cascade(label="File", menu=file_menu)
-     
 
     btn_taglable = Label(user, text="Enter tag below: ", bd=10, font=18, pady=10)
     btn_numlable = Label(user, text="Enter number of photos below: ", bd=10, font=18, pady=10)
     btn_tagentry = Entry(user, textvariable=tag_var, bd=10, show=None, font=18)
-    btn_spinbox = Spinbox(user, from_= 1, to = 500, textvariable=num_var)
+    btn_spinbox = Spinbox(user, from_=1, to=500, textvariable=num_var)
     canvas = Canvas(user)
     canvastagout = Canvas(user)
     text_area = Frame(canvas, width=10, height=10)
@@ -434,8 +428,8 @@ def openUser():
     btn_numlable.grid(row=0, column=2, padx=5, pady=5, columnspan=5)
     btn_tagentry.grid(row=1, column=0, padx=5, pady=5, columnspan=2)
     btn_spinbox.grid(row=1, column=2, padx=5, pady=5, columnspan=5)
-    #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    #btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
+    # btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+    # btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
     output_tags()
     login.wm_state('iconic')
 

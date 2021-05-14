@@ -1,0 +1,11 @@
+Download a python installation from their website if you do not have a version 3.9 python installed
+https://www.python.org/downloads/ or from https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe
+
+Open Setup folder
+Run 'setup.cpython-39' 
+It will install all packages and then close when finished.
+
+
+After which
+Open Start folder
+Run 'start.cpython-39'  start the program from here on.
