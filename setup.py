@@ -2,7 +2,6 @@ import subprocess
 import sys
 
 subprocess.run('pip install tk')
-subprocess.run('pip install Pillow')
 subprocess.run('pip install image-quality')
 subprocess.run('pip install pysqlite3')
 
@@ -12,3 +11,4 @@ reqs = subprocess.check_output([sys.executable, '-m', 'pip',
 installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
 print(installed_packages)
 print('Done')
+exit()
