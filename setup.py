@@ -2,6 +2,7 @@ import subprocess
 import sys
 
 subprocess.run('pip install tk')
+subprocess.run('pip install Pillow')
 subprocess.run('pip install image-quality')
 subprocess.run('pip install pysqlite3')
 
