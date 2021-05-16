@@ -2,25 +2,31 @@ For Installation
 
 
 Open a browser
-copy https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe into the address line in the browser
+copy https://www.python.org/downloads/ into the address line in the browser
+
+Select release version Python 3.9.5 download
 
 save the python exe to downloads
 double click python-3.9.5-amd64.exe to begin setup of python
-During the setup installation make sure to check mark "Add Python 3.9 to PATH"
-Select Customize installation
+Make sure to check mark "Add Python 3.9 to PATH" before continuing
+
+After the above select Install Now for a oneclick python install or
+*alternative
+select Custom Installation
 Click Next
 Click browse where it says Customize install location
 Create a folder within your C drive named Python
 Choose this folder as the customized install location
 Click Install
+*end of alternative
 Once installation has completed you can click close
 
 
-Now run the setup.cpython-39 file. This will install the Python packages needed to run the software.
+Now double click the setup.cpython-39 file. This will install the Python packages needed to run the software.
 *Setup is complete once the window closes
 
 
--Once the setup file is run, go ahead, and run the Start.cpython-39
+-Once the setup file is closed, go ahead, and double click the Start.cpython-39
 -The program will start up the program and open a small window called Photo Album Creation Tool
 
 
@@ -40,7 +46,7 @@ Adding Photos database:
 -A drop down will be displayed
 -Select the "Photo Upload Mode" option and a file explorer window will appear
 -Navigate to the folder which contains the photos you want to upload
--Select that folder and press the "Select Folder" button *(This will take some time, depending on how many photos are in the folder)
+-Select that folder and press the "Select Folder" button *(This will take some time, depending on how many photos and how large the filesize of the photos are in the folder)
 -The photos in the folder will then be displayed in the window *(There will be checkboxes next to the photos)
 
 Adding Tags to Photos:

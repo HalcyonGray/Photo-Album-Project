@@ -6,7 +6,7 @@ import os
 from PIL import ImageTk, Image
 import photodatabase
 from tkinter import scrolledtext
-
+import shutil
 login = Tk()
 login.title('Login')
 login.geometry("200x200")
@@ -26,7 +26,6 @@ def openAdmin():
     photolist = []
     tag_var = StringVar()
     photobuttonlist = []
-    photo_var = []  # true/false stack for tag upload
 
     # FUNCTION CALLS
 
@@ -38,12 +37,12 @@ def openAdmin():
         if not filepath:
             return
         for root, dirs, files in os.walk(filepath):  # all .png in folder
-            for file in files:
-                if file.endswith(".png") | file.endswith(".jpg"):
-                    photolist.append(os.path.join(root, file))
+            for file in files: #try changing this to something using the 'magic' or 'mimetypes' library to allow more image file types, but note that these were the fully compatable image types for pillow as of May 16 2021
+                if file.endswith(".png") | file.endswith(".PNG") | file.endswith(".jpg") | file.endswith(".JPG") | file.endswith(".jpeg") | file.endswith(".JPEG")| file.endswith("BMP")| file.endswith("DIB")| file.endswith("EPS")| file.endswith("GIF")| file.endswith("ICNS")| file.endswith("ICO")| file.endswith("IM")| file.endswith("MSP")| file.endswith("PCX")| file.endswith("PPM")| file.endswith("SGI")| file.endswith("SPIDER")| file.endswith("TGA")| file.endswith("TIFF")| file.endswith("WebP")| file.endswith("XBM")| file.endswith("bmp")| file.endswith("dib")| file.endswith("eps")| file.endswith("gif")| file.endswith("icns")| file.endswith("ico")| file.endswith("im")| file.endswith("msp")| file.endswith("pcx")| file.endswith("ppm")| file.endswith("sgi")| file.endswith("spider")| file.endswith("tga")| file.endswith("tiff")| file.endswith("webp")| file.endswith("xbm"):
+                    photolist.append(os.path.join(root, file)) 
         clear(text_area)
 
-        popup = tk.Toplevel()
+        popup = tk.Toplevel() #loading bar
         tk.Label(popup, text="Files being downloaded").grid(row=0, column=0)
 
         progress = 0
@@ -52,11 +51,13 @@ def openAdmin():
         progress_bar.grid(row=1, column=0)  # .pack(fill=tk.X, expand=1, side=tk.BOTTOM)
         popup.pack_slaves()
 
-        progress_step = float(100.0 / len(photolist))
         if not photolist:
             panel = Label(text_area, text="No photos in directory")
             panel.grid(row=3 + 1)
-
+            popup.destroy()
+            return
+        
+        progress_step = float(100.0 / len(photolist))
         for i, j in enumerate(photolist):
             var = IntVar()
             c = Checkbutton(text_area, font=18, variable=var)
@@ -72,8 +73,8 @@ def openAdmin():
             popup.update()
             progress += progress_step
             progress_var.set(progress)
-
-            photodatabase.uploadphoto(j)
+            print(j)
+            photodatabase.uploadphoto(j) #will crash is image is all ONE color Black
 
         tag_var.set("")
         popup.destroy()
@@ -107,24 +108,10 @@ def openAdmin():
             if (tag == ""):
                 return
 
-            popup = tk.Toplevel()
-            tk.Label(popup, text="Files being downloaded").grid(row=0, column=0)
-
-            progress = 0
-            progress_var = tk.DoubleVar()
-            progress_bar = ttk.Progressbar(popup, variable=progress_var, maximum=100)
-            progress_bar.grid(row=1, column=0)  # .pack(fill=tk.X, expand=1, side=tk.BOTTOM)
-            popup.pack_slaves()
-
-            progress_step = float(100.0 / len(photobuttonlist))
             for i in photobuttonlist:
-                popup.update()
-                progress += progress_step
-                progress_var.set(progress)
                 if i[1].get() != 0:
                     photodatabase.insertphoto(i[0], tag)
             tag_var.set("")
-            popup.destroy()
         clear(text_area2)
         photobuttonlist.clear()
         output_tags()
@@ -336,6 +323,7 @@ def openUser():
     tag_var = StringVar()
     num_var = IntVar()
     user.configure(bg='gray')
+    reftempalbum = []
 
     # FUNCTION CALLS
     def output_tags():
@@ -366,11 +354,11 @@ def openUser():
                         n = True
                 if n == False:
                     refstack.remove(refphoto)
-        tag_var.set("")
 
         if not refstack:
             panel = Label(text_area, text="No photos with tag Error")
             panel.grid(row=3 + 1)
+            return
 
         for i, j in enumerate(refstack):
             if i < num_var.get():
@@ -380,6 +368,7 @@ def openUser():
                 panel = Label(text_area, image=img)
                 panel.image = img
                 panel.grid(row=3 + i)
+
         canvas.create_window(0, 0, anchor='nw', window=text_area)
         scrollbar = Scrollbar(user, command=canvas.yview)
         canvas.config(yscrollcommand=scrollbar.set)
@@ -391,6 +380,62 @@ def openUser():
 
         text_area.bind("<Configure>", update_scrollregion)
         canvas.update_idletasks()
+
+        album = Toplevel(user)
+        album.title('Album')
+        album.minsize(width=1000, height=800)
+        album.geometry("500x500")
+        album.configure(bg='gray')
+
+        
+        for i, j in enumerate(refstack):
+            if i < num_var.get():
+                reftempalbum.append(refstack[i])
+        
+        imvar = Image.open(reftempalbum[0])
+        imvar.thumbnail((700, 900))
+        img = ImageTk.PhotoImage(imvar)
+        panelalbum = Label(album, image=img)
+        panelalbum.image = img
+        panelalbum.grid(row=2, column=0, sticky='nw')
+        
+        def nextimage():
+            if reftempalbum:
+                panelalbum.grid_remove
+                reftempalbum.append(reftempalbum.pop(0))
+                imvar = Image.open(reftempalbum[0])
+                imvar.thumbnail((700, 900))
+                img = ImageTk.PhotoImage(imvar)
+                panelalbum.configure(image=img)
+                panelalbum.image = img
+            else:
+                notice = Label(album, text= "End of Album")
+                notice.grid(column=2)
+
+        def savealbum():
+            directory = tag_var.get()
+            parent_dir = os.getcwd()+"/Albums/"
+            print(directory)
+            print(parent_dir)
+            path = os.path.join(parent_dir, directory)
+            print(path)
+            try:
+                os.mkdir(path)
+            except OSError as error: 
+                print(error)  
+            for i, j in enumerate(refstack):
+                if i < num_var.get():
+                    shutil.copy2(j, path)
+            album.wm_state('iconic')
+
+
+
+        btn_nextimage = Button(album, text="Next Image", command=nextimage)
+        btn_nextimage.grid(row=0, column=0, sticky='nw')
+        btn_savealbum = Button(album, text="Save Album", command=savealbum)
+        btn_savealbum.grid(row=1, column=0, sticky='nw')
+
+        user.wm_state('iconic')
 
     def update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox("all"))
@@ -404,7 +449,6 @@ def openUser():
             l.destroy()
 
     # USER BUTTONS
-
     uploadMenu = Menu(user)
     user.config(menu=uploadMenu)
     file_menu = Menu(uploadMenu)
@@ -428,8 +472,6 @@ def openUser():
     btn_numlable.grid(row=0, column=2, padx=5, pady=5, columnspan=5)
     btn_tagentry.grid(row=1, column=0, padx=5, pady=5, columnspan=2)
     btn_spinbox.grid(row=1, column=2, padx=5, pady=5, columnspan=5)
-    # btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-    # btn_quality.grid(row=1, column=0, sticky="ew", padx=5)
     output_tags()
     login.wm_state('iconic')
 
