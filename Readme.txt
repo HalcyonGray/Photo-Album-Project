@@ -108,5 +108,10 @@ Creating a Photo Album
 -Once these items are entered, select the "File" button in the top left corner
 -A drop down will be displayed
 -Then select "Album Build"
--This will create a photo album with the best pictures from among the photos with the same tags
+-This will create a photo album in a new window *(This photo album will use the best pictures from the database)
+-In this window, it will show one picture at a time, starting with the best photo, and returns to the best photo when all photos have been cycled
+-Click the "Next Image" button to see the next picture in the album
+
+-Once satisfied with the album, click "Save Album"
+-This will save the album in the "Albums" folder that is located where the "start.cpython-39.pyc" exe is
 
