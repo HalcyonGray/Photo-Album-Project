@@ -1,0 +1,1 @@
+This is where Albums are placed after Save Album inside the Album window made by the Album Build command
