@@ -415,6 +415,10 @@ def openUser():
         def savealbum():
             directory = tag_var.get()
             parent_dir = os.getcwd()+"/Albums/"
+            try:
+                os.mkdir(parent_dir)
+            except OSError as error: 
+                print(error)  
             print(directory)
             print(parent_dir)
             path = os.path.join(parent_dir, directory)
